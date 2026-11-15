@@ -7,17 +7,19 @@ pub struct JudgeRequest {
     pub request_id: i64,
     #[prost(int64, tag = "2")]
     pub problem_id: i64,
-    #[prost(enumeration = "Language", tag = "3")]
+    #[prost(int64, repeated, tag = "3")]
+    pub subproblem_ids: ::prost::alloc::vec::Vec<i64>,
+    #[prost(enumeration = "Language", tag = "4")]
     pub language: i32,
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "5")]
     pub source_code: ::prost::alloc::string::String,
-    #[prost(uint64, tag = "5")]
-    pub compile_time_ms_limit: u64,
     #[prost(uint64, tag = "6")]
-    pub build_artifact_bytes_limit: u64,
+    pub compile_time_ms_limit: u64,
     #[prost(uint64, tag = "7")]
-    pub instruction_count_limit: u64,
+    pub build_artifact_bytes_limit: u64,
     #[prost(uint64, tag = "8")]
+    pub instruction_count_limit: u64,
+    #[prost(uint64, tag = "9")]
     pub memory_bytes_limit: u64,
 }
 // Output
