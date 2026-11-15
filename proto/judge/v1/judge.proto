@@ -85,7 +85,8 @@ message JudgeResult {
     JudgeTLE time_limit_exceeded = 6;
     JudgeMLE memory_limit_exceeded = 7;
     JudgeBLE build_artifact_limit_exceeded = 8;
-    JudgeSystemError system_error = 9;
+    JudgeRuntimeError runtime_error = 9;
+    JudgeSystemError system_error = 10;
   }
 }
 
@@ -122,6 +123,10 @@ message JudgeMLE {
 
 message JudgeBLE {
   uint64 max_build_artifact_bytes = 1;
+}
+
+message JudgeRuntimeError {
+  string error_message = 1;
 }
 
 message JudgeSystemError {

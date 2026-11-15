@@ -93,7 +93,7 @@ pub struct JudgeFinishing {
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeResult {
-    #[prost(oneof = "judge_result::Verdict", tags = "1, 2, 3, 4, 5, 6, 7, 8, 9")]
+    #[prost(oneof = "judge_result::Verdict", tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
     pub verdict: ::core::option::Option<judge_result::Verdict>,
 }
 /// Nested message and enum types in `JudgeResult`.
@@ -117,6 +117,8 @@ pub mod judge_result {
         #[prost(message, tag = "8")]
         BuildArtifactLimitExceeded(super::JudgeBle),
         #[prost(message, tag = "9")]
+        RuntimeError(super::JudgeRuntimeError),
+        #[prost(message, tag = "10")]
         SystemError(super::JudgeSystemError),
     }
 }
@@ -165,6 +167,11 @@ pub struct JudgeMle {
 pub struct JudgeBle {
     #[prost(uint64, tag = "1")]
     pub max_build_artifact_bytes: u64,
+}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct JudgeRuntimeError {
+    #[prost(string, tag = "1")]
+    pub error_message: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeSystemError {
