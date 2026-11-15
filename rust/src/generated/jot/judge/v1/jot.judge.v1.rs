@@ -24,28 +24,26 @@ pub struct JudgeRequest {
 }
 // Output
 
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeEvent {
     #[prost(int64, tag = "1")]
     pub request_id: i64,
-    #[prost(oneof = "judge_event::Payload", tags = "2, 3, 4, 5, 6, 7")]
+    #[prost(oneof = "judge_event::Payload", tags = "2, 3, 4, 5, 6")]
     pub payload: ::core::option::Option<judge_event::Payload>,
 }
 /// Nested message and enum types in `JudgeEvent`.
 pub mod judge_event {
-    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Payload {
         #[prost(message, tag = "2")]
         Received(super::JudgeReceived),
         #[prost(message, tag = "3")]
         Compiling(super::JudgeCompiling),
         #[prost(message, tag = "4")]
-        FetchingTestCasesMetadata(super::JudgeFetchingTestCasesMetadata),
-        #[prost(message, tag = "5")]
         Running(super::JudgeRunning),
-        #[prost(message, tag = "6")]
+        #[prost(message, tag = "5")]
         Finishing(super::JudgeFinishing),
-        #[prost(message, tag = "7")]
+        #[prost(message, tag = "6")]
         Result(super::JudgeResult),
     }
 }
@@ -58,8 +56,33 @@ pub struct JudgeCompiling {
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeFetchingTestCasesMetadata {
 }
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeRunning {
+    #[prost(message, repeated, tag = "1")]
+    pub subproblem_statuses: ::prost::alloc::vec::Vec<SubproblemJudgeStatus>,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemJudgeStatus {
+    #[prost(int64, tag = "1")]
+    pub subproblem_id: i64,
+    #[prost(oneof = "subproblem_judge_status::Status", tags = "2, 3")]
+    pub status: ::core::option::Option<subproblem_judge_status::Status>,
+}
+/// Nested message and enum types in `SubproblemJudgeStatus`.
+pub mod subproblem_judge_status {
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Oneof)]
+    pub enum Status {
+        #[prost(message, tag = "2")]
+        Downloading(super::SubproblemTestcasesDownloading),
+        #[prost(message, tag = "3")]
+        Running(super::SubproblemJudgeRunning),
+    }
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemTestcasesDownloading {
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemJudgeRunning {
     #[prost(uint32, tag = "2")]
     pub completed_cases: u32,
     #[prost(uint32, tag = "3")]

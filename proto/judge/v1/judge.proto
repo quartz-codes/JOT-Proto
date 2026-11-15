@@ -36,10 +36,9 @@ message JudgeEvent {
   oneof payload {
     JudgeReceived received = 2;
     JudgeCompiling compiling = 3;
-    JudgeFetchingTestCasesMetadata fetching_test_cases_metadata = 4;
-    JudgeRunning running = 5;
-    JudgeFinishing finishing = 6;
-    JudgeResult result = 7;
+    JudgeRunning running = 4;
+    JudgeFinishing finishing = 5;
+    JudgeResult result = 6;
   }
 }
 
@@ -53,6 +52,22 @@ message JudgeFetchingTestCasesMetadata {
 }
 
 message JudgeRunning {
+  repeated SubproblemJudgeStatus subproblem_statuses = 1;
+}
+
+message SubproblemJudgeStatus {
+  int64 subproblem_id = 1;
+  oneof status {
+    SubproblemTestcasesDownloading downloading = 2;
+    SubproblemJudgeRunning running = 3;
+  }
+}
+
+message SubproblemTestcasesDownloading {
+
+}
+
+message SubproblemJudgeRunning {
   uint32 completed_cases = 2;
   uint32 total_cases = 3;
 }
