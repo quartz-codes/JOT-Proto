@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package jot.judge.v1;
 
+option go_package = "github.com/judge-master/JOT-Proto/go/judge/v1;judgev1";
+
 service JudgeService {
   rpc Judge(JudgeRequest) returns (stream JudgeEvent);
 }
