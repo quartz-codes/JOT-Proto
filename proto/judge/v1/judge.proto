@@ -40,8 +40,7 @@ message JudgeEvent {
     JudgeCompiling compiling = 3;
     JudgeTestcasesDownloading testcases_downloading = 4;
     JudgeRunning running = 5;
-    JudgeFinishing finishing = 6;
-    JudgeResult result = 7;
+    JudgeResult result = 6;
   }
 }
 
@@ -57,9 +56,6 @@ message JudgeTestcasesDownloading {
 message JudgeRunning {
   uint32 completed_cases = 1;
   uint32 total_cases = 2;
-}
-
-message JudgeFinishing {
 }
 
 message JudgeResult {

@@ -28,7 +28,7 @@ pub struct JudgeRequest {
 pub struct JudgeEvent {
     #[prost(int64, tag = "1")]
     pub request_id: i64,
-    #[prost(oneof = "judge_event::Payload", tags = "2, 3, 4, 5, 6, 7")]
+    #[prost(oneof = "judge_event::Payload", tags = "2, 3, 4, 5, 6")]
     pub payload: ::core::option::Option<judge_event::Payload>,
 }
 /// Nested message and enum types in `JudgeEvent`.
@@ -44,8 +44,6 @@ pub mod judge_event {
         #[prost(message, tag = "5")]
         Running(super::JudgeRunning),
         #[prost(message, tag = "6")]
-        Finishing(super::JudgeFinishing),
-        #[prost(message, tag = "7")]
         Result(super::JudgeResult),
     }
 }
@@ -64,9 +62,6 @@ pub struct JudgeRunning {
     pub completed_cases: u32,
     #[prost(uint32, tag = "2")]
     pub total_cases: u32,
-}
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JudgeFinishing {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeResult {
