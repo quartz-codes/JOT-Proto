@@ -83,8 +83,8 @@ message SubproblemVerdict {
 }
 
 message SubproblemCorrect {
-  int64 max_memory_byte_used = 1;
-  int64 max_instruction_count_used = 2;
+  uint64 max_memory_byte_used = 1;
+  uint64 max_instruction_count_used = 2;
 }
 
 message SubproblemWrongAnswer {

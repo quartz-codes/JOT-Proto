@@ -112,10 +112,10 @@ pub mod subproblem_verdict {
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubproblemCorrect {
-    #[prost(int64, tag = "1")]
-    pub max_memory_byte_used: i64,
-    #[prost(int64, tag = "2")]
-    pub max_instruction_count_used: i64,
+    #[prost(uint64, tag = "1")]
+    pub max_memory_byte_used: u64,
+    #[prost(uint64, tag = "2")]
+    pub max_instruction_count_used: u64,
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct SubproblemWrongAnswer {

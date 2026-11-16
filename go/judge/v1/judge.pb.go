@@ -789,8 +789,8 @@ func (*SubproblemVerdict_RuntimeError) isSubproblemVerdict_SubproblemVerdict() {
 
 type SubproblemCorrect struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
-	MaxMemoryByteUsed       int64                  `protobuf:"varint,1,opt,name=max_memory_byte_used,json=maxMemoryByteUsed,proto3" json:"max_memory_byte_used,omitempty"`
-	MaxInstructionCountUsed int64                  `protobuf:"varint,2,opt,name=max_instruction_count_used,json=maxInstructionCountUsed,proto3" json:"max_instruction_count_used,omitempty"`
+	MaxMemoryByteUsed       uint64                 `protobuf:"varint,1,opt,name=max_memory_byte_used,json=maxMemoryByteUsed,proto3" json:"max_memory_byte_used,omitempty"`
+	MaxInstructionCountUsed uint64                 `protobuf:"varint,2,opt,name=max_instruction_count_used,json=maxInstructionCountUsed,proto3" json:"max_instruction_count_used,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -825,14 +825,14 @@ func (*SubproblemCorrect) Descriptor() ([]byte, []int) {
 	return file_judge_v1_judge_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *SubproblemCorrect) GetMaxMemoryByteUsed() int64 {
+func (x *SubproblemCorrect) GetMaxMemoryByteUsed() uint64 {
 	if x != nil {
 		return x.MaxMemoryByteUsed
 	}
 	return 0
 }
 
-func (x *SubproblemCorrect) GetMaxInstructionCountUsed() int64 {
+func (x *SubproblemCorrect) GetMaxInstructionCountUsed() uint64 {
 	if x != nil {
 		return x.MaxInstructionCountUsed
 	}
@@ -1240,8 +1240,8 @@ const file_judge_v1_judge_proto_rawDesc = "" +
 	"\rruntime_error\x18\x05 \x01(\v2$.jot.judge.v1.SubproblemRuntimeErrorH\x00R\fruntimeErrorB\x14\n" +
 	"\x12subproblem_verdict\"\x81\x01\n" +
 	"\x11SubproblemCorrect\x12/\n" +
-	"\x14max_memory_byte_used\x18\x01 \x01(\x03R\x11maxMemoryByteUsed\x12;\n" +
-	"\x1amax_instruction_count_used\x18\x02 \x01(\x03R\x17maxInstructionCountUsed\"\x17\n" +
+	"\x14max_memory_byte_used\x18\x01 \x01(\x04R\x11maxMemoryByteUsed\x12;\n" +
+	"\x1amax_instruction_count_used\x18\x02 \x01(\x04R\x17maxInstructionCountUsed\"\x17\n" +
 	"\x15SubproblemWrongAnswer\"C\n" +
 	"\rSubproblemTLE\x122\n" +
 	"\x15max_instruction_count\x18\x01 \x01(\x04R\x13maxInstructionCount\"9\n" +
