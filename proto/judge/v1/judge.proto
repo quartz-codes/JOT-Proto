@@ -59,37 +59,51 @@ message JudgeRunning {
   uint32 total_cases = 2;
 }
 
-message SubproblemJudgeRunning {
-  uint32 completed_cases = 2;
-  uint32 total_cases = 3;
-}
-
 message JudgeFinishing {
 }
 
 message JudgeResult {
   oneof verdict {
     JudgeComplete complete = 1;
-    JudgeWrongAnswer wrong_answer = 2;
-    JudgeCompileError compile_error = 3;
-    JudgeCompileTLE compile_tle = 4;
-    JudgeCompileBLE compile_ble = 5;
-    JudgeTLE time_limit_exceeded = 6;
-    JudgeMLE memory_limit_exceeded = 7;
-    JudgeBLE build_artifact_limit_exceeded = 8;
-    JudgeRuntimeError runtime_error = 9;
-    JudgeSystemError system_error = 10;
+    JudgeCompileError compile_error = 2;
+    JudgeCompileTLE compile_tle = 3;
+    JudgeCompileBLE compile_ble = 4;
+    JudgeSystemError system_error = 5;
   }
 }
 
 message JudgeComplete {
-  map<int64, bool> subproblem_is_correct = 1;
-  uint64 instruction_count = 3;
-  uint64 memory_bytes = 4;
+  map<int64, SubproblemVerdict> subproblem_verdicts = 1;
 }
 
-message JudgeWrongAnswer {
-  string message = 1;
+message SubproblemVerdict {
+  oneof subproblem_verdict {
+    SubproblemCorrect correct = 1;
+    SubproblemWrongAnswer wrong_answer = 2;
+    SubproblemTLE time_limit_exceeded = 3;
+    SubproblemMLE memory_limit_exceeded = 4;
+    SubproblemRuntimeError runtime_error = 5;
+  }
+}
+
+message SubproblemCorrect {
+  int64 max_memory_byte_used = 1;
+  int64 max_instruction_count_used = 2;
+}
+
+message SubproblemWrongAnswer {
+}
+
+message SubproblemTLE {
+  uint64 max_instruction_count = 1;
+}
+
+message SubproblemMLE {
+  uint64 max_memory_bytes = 1;
+}
+
+message SubproblemRuntimeError {
+  string error_message = 1;
 }
 
 message JudgeCompileError {
@@ -102,22 +116,6 @@ message JudgeCompileTLE {
 
 message JudgeCompileBLE {
   uint64 max_build_artifact_bytes = 1;
-}
-
-message JudgeTLE {
-  uint64 max_instruction_count = 1;
-}
-
-message JudgeMLE {
-  uint64 max_memory_bytes = 1;
-}
-
-message JudgeBLE {
-  uint64 max_build_artifact_bytes = 1;
-}
-
-message JudgeRuntimeError {
-  string error_message = 1;
 }
 
 message JudgeSystemError {

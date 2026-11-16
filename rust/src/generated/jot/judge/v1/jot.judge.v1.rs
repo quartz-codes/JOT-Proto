@@ -66,18 +66,11 @@ pub struct JudgeRunning {
     pub total_cases: u32,
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct SubproblemJudgeRunning {
-    #[prost(uint32, tag = "2")]
-    pub completed_cases: u32,
-    #[prost(uint32, tag = "3")]
-    pub total_cases: u32,
-}
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeFinishing {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeResult {
-    #[prost(oneof = "judge_result::Verdict", tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
+    #[prost(oneof = "judge_result::Verdict", tags = "1, 2, 3, 4, 5")]
     pub verdict: ::core::option::Option<judge_result::Verdict>,
 }
 /// Nested message and enum types in `JudgeResult`.
@@ -87,38 +80,65 @@ pub mod judge_result {
         #[prost(message, tag = "1")]
         Complete(super::JudgeComplete),
         #[prost(message, tag = "2")]
-        WrongAnswer(super::JudgeWrongAnswer),
-        #[prost(message, tag = "3")]
         CompileError(super::JudgeCompileError),
-        #[prost(message, tag = "4")]
+        #[prost(message, tag = "3")]
         CompileTle(super::JudgeCompileTle),
-        #[prost(message, tag = "5")]
+        #[prost(message, tag = "4")]
         CompileBle(super::JudgeCompileBle),
-        #[prost(message, tag = "6")]
-        TimeLimitExceeded(super::JudgeTle),
-        #[prost(message, tag = "7")]
-        MemoryLimitExceeded(super::JudgeMle),
-        #[prost(message, tag = "8")]
-        BuildArtifactLimitExceeded(super::JudgeBle),
-        #[prost(message, tag = "9")]
-        RuntimeError(super::JudgeRuntimeError),
-        #[prost(message, tag = "10")]
+        #[prost(message, tag = "5")]
         SystemError(super::JudgeSystemError),
     }
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeComplete {
-    #[prost(map = "int64, bool", tag = "1")]
-    pub subproblem_is_correct: ::std::collections::HashMap<i64, bool>,
-    #[prost(uint64, tag = "3")]
-    pub instruction_count: u64,
-    #[prost(uint64, tag = "4")]
-    pub memory_bytes: u64,
+    #[prost(map = "int64, message", tag = "1")]
+    pub subproblem_verdicts: ::std::collections::HashMap<i64, SubproblemVerdict>,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JudgeWrongAnswer {
+pub struct SubproblemVerdict {
+    #[prost(oneof = "subproblem_verdict::SubproblemVerdict", tags = "1, 2, 3, 4, 5")]
+    pub subproblem_verdict: ::core::option::Option<subproblem_verdict::SubproblemVerdict>,
+}
+/// Nested message and enum types in `SubproblemVerdict`.
+pub mod subproblem_verdict {
+    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    pub enum SubproblemVerdict {
+        #[prost(message, tag = "1")]
+        Correct(super::SubproblemCorrect),
+        #[prost(message, tag = "2")]
+        WrongAnswer(super::SubproblemWrongAnswer),
+        #[prost(message, tag = "3")]
+        TimeLimitExceeded(super::SubproblemTle),
+        #[prost(message, tag = "4")]
+        MemoryLimitExceeded(super::SubproblemMle),
+        #[prost(message, tag = "5")]
+        RuntimeError(super::SubproblemRuntimeError),
+    }
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemCorrect {
+    #[prost(int64, tag = "1")]
+    pub max_memory_byte_used: i64,
+    #[prost(int64, tag = "2")]
+    pub max_instruction_count_used: i64,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemWrongAnswer {
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemTle {
+    #[prost(uint64, tag = "1")]
+    pub max_instruction_count: u64,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemMle {
+    #[prost(uint64, tag = "1")]
+    pub max_memory_bytes: u64,
+}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct SubproblemRuntimeError {
     #[prost(string, tag = "1")]
-    pub message: ::prost::alloc::string::String,
+    pub error_message: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeCompileError {
@@ -134,26 +154,6 @@ pub struct JudgeCompileTle {
 pub struct JudgeCompileBle {
     #[prost(uint64, tag = "1")]
     pub max_build_artifact_bytes: u64,
-}
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JudgeTle {
-    #[prost(uint64, tag = "1")]
-    pub max_instruction_count: u64,
-}
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JudgeMle {
-    #[prost(uint64, tag = "1")]
-    pub max_memory_bytes: u64,
-}
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JudgeBle {
-    #[prost(uint64, tag = "1")]
-    pub max_build_artifact_bytes: u64,
-}
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct JudgeRuntimeError {
-    #[prost(string, tag = "1")]
-    pub error_message: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeSystemError {

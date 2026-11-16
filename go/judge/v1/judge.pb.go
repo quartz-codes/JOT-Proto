@@ -499,58 +499,6 @@ func (x *JudgeRunning) GetTotalCases() uint32 {
 	return 0
 }
 
-type SubproblemJudgeRunning struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	CompletedCases uint32                 `protobuf:"varint,2,opt,name=completed_cases,json=completedCases,proto3" json:"completed_cases,omitempty"`
-	TotalCases     uint32                 `protobuf:"varint,3,opt,name=total_cases,json=totalCases,proto3" json:"total_cases,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *SubproblemJudgeRunning) Reset() {
-	*x = SubproblemJudgeRunning{}
-	mi := &file_judge_v1_judge_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SubproblemJudgeRunning) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubproblemJudgeRunning) ProtoMessage() {}
-
-func (x *SubproblemJudgeRunning) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubproblemJudgeRunning.ProtoReflect.Descriptor instead.
-func (*SubproblemJudgeRunning) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *SubproblemJudgeRunning) GetCompletedCases() uint32 {
-	if x != nil {
-		return x.CompletedCases
-	}
-	return 0
-}
-
-func (x *SubproblemJudgeRunning) GetTotalCases() uint32 {
-	if x != nil {
-		return x.TotalCases
-	}
-	return 0
-}
-
 type JudgeFinishing struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -559,7 +507,7 @@ type JudgeFinishing struct {
 
 func (x *JudgeFinishing) Reset() {
 	*x = JudgeFinishing{}
-	mi := &file_judge_v1_judge_proto_msgTypes[7]
+	mi := &file_judge_v1_judge_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -571,7 +519,7 @@ func (x *JudgeFinishing) String() string {
 func (*JudgeFinishing) ProtoMessage() {}
 
 func (x *JudgeFinishing) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[7]
+	mi := &file_judge_v1_judge_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -584,7 +532,7 @@ func (x *JudgeFinishing) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeFinishing.ProtoReflect.Descriptor instead.
 func (*JudgeFinishing) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{7}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{6}
 }
 
 type JudgeResult struct {
@@ -592,14 +540,9 @@ type JudgeResult struct {
 	// Types that are valid to be assigned to Verdict:
 	//
 	//	*JudgeResult_Complete
-	//	*JudgeResult_WrongAnswer
 	//	*JudgeResult_CompileError
 	//	*JudgeResult_CompileTle
 	//	*JudgeResult_CompileBle
-	//	*JudgeResult_TimeLimitExceeded
-	//	*JudgeResult_MemoryLimitExceeded
-	//	*JudgeResult_BuildArtifactLimitExceeded
-	//	*JudgeResult_RuntimeError
 	//	*JudgeResult_SystemError
 	Verdict       isJudgeResult_Verdict `protobuf_oneof:"verdict"`
 	unknownFields protoimpl.UnknownFields
@@ -608,7 +551,7 @@ type JudgeResult struct {
 
 func (x *JudgeResult) Reset() {
 	*x = JudgeResult{}
-	mi := &file_judge_v1_judge_proto_msgTypes[8]
+	mi := &file_judge_v1_judge_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -620,7 +563,7 @@ func (x *JudgeResult) String() string {
 func (*JudgeResult) ProtoMessage() {}
 
 func (x *JudgeResult) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[8]
+	mi := &file_judge_v1_judge_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -633,7 +576,7 @@ func (x *JudgeResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeResult.ProtoReflect.Descriptor instead.
 func (*JudgeResult) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{8}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *JudgeResult) GetVerdict() isJudgeResult_Verdict {
@@ -647,15 +590,6 @@ func (x *JudgeResult) GetComplete() *JudgeComplete {
 	if x != nil {
 		if x, ok := x.Verdict.(*JudgeResult_Complete); ok {
 			return x.Complete
-		}
-	}
-	return nil
-}
-
-func (x *JudgeResult) GetWrongAnswer() *JudgeWrongAnswer {
-	if x != nil {
-		if x, ok := x.Verdict.(*JudgeResult_WrongAnswer); ok {
-			return x.WrongAnswer
 		}
 	}
 	return nil
@@ -688,42 +622,6 @@ func (x *JudgeResult) GetCompileBle() *JudgeCompileBLE {
 	return nil
 }
 
-func (x *JudgeResult) GetTimeLimitExceeded() *JudgeTLE {
-	if x != nil {
-		if x, ok := x.Verdict.(*JudgeResult_TimeLimitExceeded); ok {
-			return x.TimeLimitExceeded
-		}
-	}
-	return nil
-}
-
-func (x *JudgeResult) GetMemoryLimitExceeded() *JudgeMLE {
-	if x != nil {
-		if x, ok := x.Verdict.(*JudgeResult_MemoryLimitExceeded); ok {
-			return x.MemoryLimitExceeded
-		}
-	}
-	return nil
-}
-
-func (x *JudgeResult) GetBuildArtifactLimitExceeded() *JudgeBLE {
-	if x != nil {
-		if x, ok := x.Verdict.(*JudgeResult_BuildArtifactLimitExceeded); ok {
-			return x.BuildArtifactLimitExceeded
-		}
-	}
-	return nil
-}
-
-func (x *JudgeResult) GetRuntimeError() *JudgeRuntimeError {
-	if x != nil {
-		if x, ok := x.Verdict.(*JudgeResult_RuntimeError); ok {
-			return x.RuntimeError
-		}
-	}
-	return nil
-}
-
 func (x *JudgeResult) GetSystemError() *JudgeSystemError {
 	if x != nil {
 		if x, ok := x.Verdict.(*JudgeResult_SystemError); ok {
@@ -741,45 +639,23 @@ type JudgeResult_Complete struct {
 	Complete *JudgeComplete `protobuf:"bytes,1,opt,name=complete,proto3,oneof"`
 }
 
-type JudgeResult_WrongAnswer struct {
-	WrongAnswer *JudgeWrongAnswer `protobuf:"bytes,2,opt,name=wrong_answer,json=wrongAnswer,proto3,oneof"`
-}
-
 type JudgeResult_CompileError struct {
-	CompileError *JudgeCompileError `protobuf:"bytes,3,opt,name=compile_error,json=compileError,proto3,oneof"`
+	CompileError *JudgeCompileError `protobuf:"bytes,2,opt,name=compile_error,json=compileError,proto3,oneof"`
 }
 
 type JudgeResult_CompileTle struct {
-	CompileTle *JudgeCompileTLE `protobuf:"bytes,4,opt,name=compile_tle,json=compileTle,proto3,oneof"`
+	CompileTle *JudgeCompileTLE `protobuf:"bytes,3,opt,name=compile_tle,json=compileTle,proto3,oneof"`
 }
 
 type JudgeResult_CompileBle struct {
-	CompileBle *JudgeCompileBLE `protobuf:"bytes,5,opt,name=compile_ble,json=compileBle,proto3,oneof"`
-}
-
-type JudgeResult_TimeLimitExceeded struct {
-	TimeLimitExceeded *JudgeTLE `protobuf:"bytes,6,opt,name=time_limit_exceeded,json=timeLimitExceeded,proto3,oneof"`
-}
-
-type JudgeResult_MemoryLimitExceeded struct {
-	MemoryLimitExceeded *JudgeMLE `protobuf:"bytes,7,opt,name=memory_limit_exceeded,json=memoryLimitExceeded,proto3,oneof"`
-}
-
-type JudgeResult_BuildArtifactLimitExceeded struct {
-	BuildArtifactLimitExceeded *JudgeBLE `protobuf:"bytes,8,opt,name=build_artifact_limit_exceeded,json=buildArtifactLimitExceeded,proto3,oneof"`
-}
-
-type JudgeResult_RuntimeError struct {
-	RuntimeError *JudgeRuntimeError `protobuf:"bytes,9,opt,name=runtime_error,json=runtimeError,proto3,oneof"`
+	CompileBle *JudgeCompileBLE `protobuf:"bytes,4,opt,name=compile_ble,json=compileBle,proto3,oneof"`
 }
 
 type JudgeResult_SystemError struct {
-	SystemError *JudgeSystemError `protobuf:"bytes,10,opt,name=system_error,json=systemError,proto3,oneof"`
+	SystemError *JudgeSystemError `protobuf:"bytes,5,opt,name=system_error,json=systemError,proto3,oneof"`
 }
 
 func (*JudgeResult_Complete) isJudgeResult_Verdict() {}
-
-func (*JudgeResult_WrongAnswer) isJudgeResult_Verdict() {}
 
 func (*JudgeResult_CompileError) isJudgeResult_Verdict() {}
 
@@ -787,28 +663,18 @@ func (*JudgeResult_CompileTle) isJudgeResult_Verdict() {}
 
 func (*JudgeResult_CompileBle) isJudgeResult_Verdict() {}
 
-func (*JudgeResult_TimeLimitExceeded) isJudgeResult_Verdict() {}
-
-func (*JudgeResult_MemoryLimitExceeded) isJudgeResult_Verdict() {}
-
-func (*JudgeResult_BuildArtifactLimitExceeded) isJudgeResult_Verdict() {}
-
-func (*JudgeResult_RuntimeError) isJudgeResult_Verdict() {}
-
 func (*JudgeResult_SystemError) isJudgeResult_Verdict() {}
 
 type JudgeComplete struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	SubproblemIsCorrect map[int64]bool         `protobuf:"bytes,1,rep,name=subproblem_is_correct,json=subproblemIsCorrect,proto3" json:"subproblem_is_correct,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
-	InstructionCount    uint64                 `protobuf:"varint,3,opt,name=instruction_count,json=instructionCount,proto3" json:"instruction_count,omitempty"`
-	MemoryBytes         uint64                 `protobuf:"varint,4,opt,name=memory_bytes,json=memoryBytes,proto3" json:"memory_bytes,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state              protoimpl.MessageState       `protogen:"open.v1"`
+	SubproblemVerdicts map[int64]*SubproblemVerdict `protobuf:"bytes,1,rep,name=subproblem_verdicts,json=subproblemVerdicts,proto3" json:"subproblem_verdicts,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *JudgeComplete) Reset() {
 	*x = JudgeComplete{}
-	mi := &file_judge_v1_judge_proto_msgTypes[9]
+	mi := &file_judge_v1_judge_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -820,7 +686,7 @@ func (x *JudgeComplete) String() string {
 func (*JudgeComplete) ProtoMessage() {}
 
 func (x *JudgeComplete) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[9]
+	mi := &file_judge_v1_judge_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -833,51 +699,168 @@ func (x *JudgeComplete) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeComplete.ProtoReflect.Descriptor instead.
 func (*JudgeComplete) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{9}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *JudgeComplete) GetSubproblemIsCorrect() map[int64]bool {
+func (x *JudgeComplete) GetSubproblemVerdicts() map[int64]*SubproblemVerdict {
 	if x != nil {
-		return x.SubproblemIsCorrect
+		return x.SubproblemVerdicts
 	}
 	return nil
 }
 
-func (x *JudgeComplete) GetInstructionCount() uint64 {
+type SubproblemVerdict struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to SubproblemVerdict:
+	//
+	//	*SubproblemVerdict_Correct
+	//	*SubproblemVerdict_WrongAnswer
+	//	*SubproblemVerdict_TimeLimitExceeded
+	//	*SubproblemVerdict_MemoryLimitExceeded
+	//	*SubproblemVerdict_RuntimeError
+	SubproblemVerdict isSubproblemVerdict_SubproblemVerdict `protobuf_oneof:"subproblem_verdict"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *SubproblemVerdict) Reset() {
+	*x = SubproblemVerdict{}
+	mi := &file_judge_v1_judge_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubproblemVerdict) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubproblemVerdict) ProtoMessage() {}
+
+func (x *SubproblemVerdict) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_v1_judge_proto_msgTypes[9]
 	if x != nil {
-		return x.InstructionCount
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	return 0
+	return mi.MessageOf(x)
 }
 
-func (x *JudgeComplete) GetMemoryBytes() uint64 {
+// Deprecated: Use SubproblemVerdict.ProtoReflect.Descriptor instead.
+func (*SubproblemVerdict) Descriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SubproblemVerdict) GetSubproblemVerdict() isSubproblemVerdict_SubproblemVerdict {
 	if x != nil {
-		return x.MemoryBytes
+		return x.SubproblemVerdict
 	}
-	return 0
+	return nil
 }
 
-type JudgeWrongAnswer struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+func (x *SubproblemVerdict) GetCorrect() *SubproblemCorrect {
+	if x != nil {
+		if x, ok := x.SubproblemVerdict.(*SubproblemVerdict_Correct); ok {
+			return x.Correct
+		}
+	}
+	return nil
 }
 
-func (x *JudgeWrongAnswer) Reset() {
-	*x = JudgeWrongAnswer{}
+func (x *SubproblemVerdict) GetWrongAnswer() *SubproblemWrongAnswer {
+	if x != nil {
+		if x, ok := x.SubproblemVerdict.(*SubproblemVerdict_WrongAnswer); ok {
+			return x.WrongAnswer
+		}
+	}
+	return nil
+}
+
+func (x *SubproblemVerdict) GetTimeLimitExceeded() *SubproblemTLE {
+	if x != nil {
+		if x, ok := x.SubproblemVerdict.(*SubproblemVerdict_TimeLimitExceeded); ok {
+			return x.TimeLimitExceeded
+		}
+	}
+	return nil
+}
+
+func (x *SubproblemVerdict) GetMemoryLimitExceeded() *SubproblemMLE {
+	if x != nil {
+		if x, ok := x.SubproblemVerdict.(*SubproblemVerdict_MemoryLimitExceeded); ok {
+			return x.MemoryLimitExceeded
+		}
+	}
+	return nil
+}
+
+func (x *SubproblemVerdict) GetRuntimeError() *SubproblemRuntimeError {
+	if x != nil {
+		if x, ok := x.SubproblemVerdict.(*SubproblemVerdict_RuntimeError); ok {
+			return x.RuntimeError
+		}
+	}
+	return nil
+}
+
+type isSubproblemVerdict_SubproblemVerdict interface {
+	isSubproblemVerdict_SubproblemVerdict()
+}
+
+type SubproblemVerdict_Correct struct {
+	Correct *SubproblemCorrect `protobuf:"bytes,1,opt,name=correct,proto3,oneof"`
+}
+
+type SubproblemVerdict_WrongAnswer struct {
+	WrongAnswer *SubproblemWrongAnswer `protobuf:"bytes,2,opt,name=wrong_answer,json=wrongAnswer,proto3,oneof"`
+}
+
+type SubproblemVerdict_TimeLimitExceeded struct {
+	TimeLimitExceeded *SubproblemTLE `protobuf:"bytes,3,opt,name=time_limit_exceeded,json=timeLimitExceeded,proto3,oneof"`
+}
+
+type SubproblemVerdict_MemoryLimitExceeded struct {
+	MemoryLimitExceeded *SubproblemMLE `protobuf:"bytes,4,opt,name=memory_limit_exceeded,json=memoryLimitExceeded,proto3,oneof"`
+}
+
+type SubproblemVerdict_RuntimeError struct {
+	RuntimeError *SubproblemRuntimeError `protobuf:"bytes,5,opt,name=runtime_error,json=runtimeError,proto3,oneof"`
+}
+
+func (*SubproblemVerdict_Correct) isSubproblemVerdict_SubproblemVerdict() {}
+
+func (*SubproblemVerdict_WrongAnswer) isSubproblemVerdict_SubproblemVerdict() {}
+
+func (*SubproblemVerdict_TimeLimitExceeded) isSubproblemVerdict_SubproblemVerdict() {}
+
+func (*SubproblemVerdict_MemoryLimitExceeded) isSubproblemVerdict_SubproblemVerdict() {}
+
+func (*SubproblemVerdict_RuntimeError) isSubproblemVerdict_SubproblemVerdict() {}
+
+type SubproblemCorrect struct {
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	MaxMemoryByteUsed       int64                  `protobuf:"varint,1,opt,name=max_memory_byte_used,json=maxMemoryByteUsed,proto3" json:"max_memory_byte_used,omitempty"`
+	MaxInstructionCountUsed int64                  `protobuf:"varint,2,opt,name=max_instruction_count_used,json=maxInstructionCountUsed,proto3" json:"max_instruction_count_used,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *SubproblemCorrect) Reset() {
+	*x = SubproblemCorrect{}
 	mi := &file_judge_v1_judge_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *JudgeWrongAnswer) String() string {
+func (x *SubproblemCorrect) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*JudgeWrongAnswer) ProtoMessage() {}
+func (*SubproblemCorrect) ProtoMessage() {}
 
-func (x *JudgeWrongAnswer) ProtoReflect() protoreflect.Message {
+func (x *SubproblemCorrect) ProtoReflect() protoreflect.Message {
 	mi := &file_judge_v1_judge_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -889,14 +872,189 @@ func (x *JudgeWrongAnswer) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use JudgeWrongAnswer.ProtoReflect.Descriptor instead.
-func (*JudgeWrongAnswer) Descriptor() ([]byte, []int) {
+// Deprecated: Use SubproblemCorrect.ProtoReflect.Descriptor instead.
+func (*SubproblemCorrect) Descriptor() ([]byte, []int) {
 	return file_judge_v1_judge_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *JudgeWrongAnswer) GetMessage() string {
+func (x *SubproblemCorrect) GetMaxMemoryByteUsed() int64 {
 	if x != nil {
-		return x.Message
+		return x.MaxMemoryByteUsed
+	}
+	return 0
+}
+
+func (x *SubproblemCorrect) GetMaxInstructionCountUsed() int64 {
+	if x != nil {
+		return x.MaxInstructionCountUsed
+	}
+	return 0
+}
+
+type SubproblemWrongAnswer struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubproblemWrongAnswer) Reset() {
+	*x = SubproblemWrongAnswer{}
+	mi := &file_judge_v1_judge_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubproblemWrongAnswer) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubproblemWrongAnswer) ProtoMessage() {}
+
+func (x *SubproblemWrongAnswer) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_v1_judge_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubproblemWrongAnswer.ProtoReflect.Descriptor instead.
+func (*SubproblemWrongAnswer) Descriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{11}
+}
+
+type SubproblemTLE struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	MaxInstructionCount uint64                 `protobuf:"varint,1,opt,name=max_instruction_count,json=maxInstructionCount,proto3" json:"max_instruction_count,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SubproblemTLE) Reset() {
+	*x = SubproblemTLE{}
+	mi := &file_judge_v1_judge_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubproblemTLE) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubproblemTLE) ProtoMessage() {}
+
+func (x *SubproblemTLE) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_v1_judge_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubproblemTLE.ProtoReflect.Descriptor instead.
+func (*SubproblemTLE) Descriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SubproblemTLE) GetMaxInstructionCount() uint64 {
+	if x != nil {
+		return x.MaxInstructionCount
+	}
+	return 0
+}
+
+type SubproblemMLE struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	MaxMemoryBytes uint64                 `protobuf:"varint,1,opt,name=max_memory_bytes,json=maxMemoryBytes,proto3" json:"max_memory_bytes,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SubproblemMLE) Reset() {
+	*x = SubproblemMLE{}
+	mi := &file_judge_v1_judge_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubproblemMLE) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubproblemMLE) ProtoMessage() {}
+
+func (x *SubproblemMLE) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_v1_judge_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubproblemMLE.ProtoReflect.Descriptor instead.
+func (*SubproblemMLE) Descriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SubproblemMLE) GetMaxMemoryBytes() uint64 {
+	if x != nil {
+		return x.MaxMemoryBytes
+	}
+	return 0
+}
+
+type SubproblemRuntimeError struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ErrorMessage  string                 `protobuf:"bytes,1,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubproblemRuntimeError) Reset() {
+	*x = SubproblemRuntimeError{}
+	mi := &file_judge_v1_judge_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubproblemRuntimeError) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubproblemRuntimeError) ProtoMessage() {}
+
+func (x *SubproblemRuntimeError) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_v1_judge_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubproblemRuntimeError.ProtoReflect.Descriptor instead.
+func (*SubproblemRuntimeError) Descriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SubproblemRuntimeError) GetErrorMessage() string {
+	if x != nil {
+		return x.ErrorMessage
 	}
 	return ""
 }
@@ -910,7 +1068,7 @@ type JudgeCompileError struct {
 
 func (x *JudgeCompileError) Reset() {
 	*x = JudgeCompileError{}
-	mi := &file_judge_v1_judge_proto_msgTypes[11]
+	mi := &file_judge_v1_judge_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -922,7 +1080,7 @@ func (x *JudgeCompileError) String() string {
 func (*JudgeCompileError) ProtoMessage() {}
 
 func (x *JudgeCompileError) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[11]
+	mi := &file_judge_v1_judge_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -935,7 +1093,7 @@ func (x *JudgeCompileError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompileError.ProtoReflect.Descriptor instead.
 func (*JudgeCompileError) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{11}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *JudgeCompileError) GetCompilerDiagnostics() string {
@@ -954,7 +1112,7 @@ type JudgeCompileTLE struct {
 
 func (x *JudgeCompileTLE) Reset() {
 	*x = JudgeCompileTLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[12]
+	mi := &file_judge_v1_judge_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -966,7 +1124,7 @@ func (x *JudgeCompileTLE) String() string {
 func (*JudgeCompileTLE) ProtoMessage() {}
 
 func (x *JudgeCompileTLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[12]
+	mi := &file_judge_v1_judge_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -979,7 +1137,7 @@ func (x *JudgeCompileTLE) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompileTLE.ProtoReflect.Descriptor instead.
 func (*JudgeCompileTLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{12}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *JudgeCompileTLE) GetMaxCompileTimeMs() uint64 {
@@ -998,7 +1156,7 @@ type JudgeCompileBLE struct {
 
 func (x *JudgeCompileBLE) Reset() {
 	*x = JudgeCompileBLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[13]
+	mi := &file_judge_v1_judge_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1010,7 +1168,7 @@ func (x *JudgeCompileBLE) String() string {
 func (*JudgeCompileBLE) ProtoMessage() {}
 
 func (x *JudgeCompileBLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[13]
+	mi := &file_judge_v1_judge_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1023,7 +1181,7 @@ func (x *JudgeCompileBLE) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompileBLE.ProtoReflect.Descriptor instead.
 func (*JudgeCompileBLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{13}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *JudgeCompileBLE) GetMaxBuildArtifactBytes() uint64 {
@@ -1031,182 +1189,6 @@ func (x *JudgeCompileBLE) GetMaxBuildArtifactBytes() uint64 {
 		return x.MaxBuildArtifactBytes
 	}
 	return 0
-}
-
-type JudgeTLE struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	MaxInstructionCount uint64                 `protobuf:"varint,1,opt,name=max_instruction_count,json=maxInstructionCount,proto3" json:"max_instruction_count,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
-}
-
-func (x *JudgeTLE) Reset() {
-	*x = JudgeTLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JudgeTLE) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JudgeTLE) ProtoMessage() {}
-
-func (x *JudgeTLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JudgeTLE.ProtoReflect.Descriptor instead.
-func (*JudgeTLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *JudgeTLE) GetMaxInstructionCount() uint64 {
-	if x != nil {
-		return x.MaxInstructionCount
-	}
-	return 0
-}
-
-type JudgeMLE struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	MaxMemoryBytes uint64                 `protobuf:"varint,1,opt,name=max_memory_bytes,json=maxMemoryBytes,proto3" json:"max_memory_bytes,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *JudgeMLE) Reset() {
-	*x = JudgeMLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JudgeMLE) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JudgeMLE) ProtoMessage() {}
-
-func (x *JudgeMLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JudgeMLE.ProtoReflect.Descriptor instead.
-func (*JudgeMLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *JudgeMLE) GetMaxMemoryBytes() uint64 {
-	if x != nil {
-		return x.MaxMemoryBytes
-	}
-	return 0
-}
-
-type JudgeBLE struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	MaxBuildArtifactBytes uint64                 `protobuf:"varint,1,opt,name=max_build_artifact_bytes,json=maxBuildArtifactBytes,proto3" json:"max_build_artifact_bytes,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
-}
-
-func (x *JudgeBLE) Reset() {
-	*x = JudgeBLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JudgeBLE) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JudgeBLE) ProtoMessage() {}
-
-func (x *JudgeBLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JudgeBLE.ProtoReflect.Descriptor instead.
-func (*JudgeBLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *JudgeBLE) GetMaxBuildArtifactBytes() uint64 {
-	if x != nil {
-		return x.MaxBuildArtifactBytes
-	}
-	return 0
-}
-
-type JudgeRuntimeError struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ErrorMessage  string                 `protobuf:"bytes,1,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *JudgeRuntimeError) Reset() {
-	*x = JudgeRuntimeError{}
-	mi := &file_judge_v1_judge_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JudgeRuntimeError) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JudgeRuntimeError) ProtoMessage() {}
-
-func (x *JudgeRuntimeError) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JudgeRuntimeError.ProtoReflect.Descriptor instead.
-func (*JudgeRuntimeError) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *JudgeRuntimeError) GetErrorMessage() string {
-	if x != nil {
-		return x.ErrorMessage
-	}
-	return ""
 }
 
 type JudgeSystemError struct {
@@ -1288,50 +1270,45 @@ const file_judge_v1_judge_proto_rawDesc = "" +
 	"\fJudgeRunning\x12'\n" +
 	"\x0fcompleted_cases\x18\x01 \x01(\rR\x0ecompletedCases\x12\x1f\n" +
 	"\vtotal_cases\x18\x02 \x01(\rR\n" +
-	"totalCases\"b\n" +
-	"\x16SubproblemJudgeRunning\x12'\n" +
-	"\x0fcompleted_cases\x18\x02 \x01(\rR\x0ecompletedCases\x12\x1f\n" +
-	"\vtotal_cases\x18\x03 \x01(\rR\n" +
 	"totalCases\"\x10\n" +
-	"\x0eJudgeFinishing\"\xe6\x05\n" +
+	"\x0eJudgeFinishing\"\xe4\x02\n" +
 	"\vJudgeResult\x129\n" +
-	"\bcomplete\x18\x01 \x01(\v2\x1b.jot.judge.v1.JudgeCompleteH\x00R\bcomplete\x12C\n" +
-	"\fwrong_answer\x18\x02 \x01(\v2\x1e.jot.judge.v1.JudgeWrongAnswerH\x00R\vwrongAnswer\x12F\n" +
-	"\rcompile_error\x18\x03 \x01(\v2\x1f.jot.judge.v1.JudgeCompileErrorH\x00R\fcompileError\x12@\n" +
-	"\vcompile_tle\x18\x04 \x01(\v2\x1d.jot.judge.v1.JudgeCompileTLEH\x00R\n" +
+	"\bcomplete\x18\x01 \x01(\v2\x1b.jot.judge.v1.JudgeCompleteH\x00R\bcomplete\x12F\n" +
+	"\rcompile_error\x18\x02 \x01(\v2\x1f.jot.judge.v1.JudgeCompileErrorH\x00R\fcompileError\x12@\n" +
+	"\vcompile_tle\x18\x03 \x01(\v2\x1d.jot.judge.v1.JudgeCompileTLEH\x00R\n" +
 	"compileTle\x12@\n" +
-	"\vcompile_ble\x18\x05 \x01(\v2\x1d.jot.judge.v1.JudgeCompileBLEH\x00R\n" +
-	"compileBle\x12H\n" +
-	"\x13time_limit_exceeded\x18\x06 \x01(\v2\x16.jot.judge.v1.JudgeTLEH\x00R\x11timeLimitExceeded\x12L\n" +
-	"\x15memory_limit_exceeded\x18\a \x01(\v2\x16.jot.judge.v1.JudgeMLEH\x00R\x13memoryLimitExceeded\x12[\n" +
-	"\x1dbuild_artifact_limit_exceeded\x18\b \x01(\v2\x16.jot.judge.v1.JudgeBLEH\x00R\x1abuildArtifactLimitExceeded\x12F\n" +
-	"\rruntime_error\x18\t \x01(\v2\x1f.jot.judge.v1.JudgeRuntimeErrorH\x00R\fruntimeError\x12C\n" +
-	"\fsystem_error\x18\n" +
-	" \x01(\v2\x1e.jot.judge.v1.JudgeSystemErrorH\x00R\vsystemErrorB\t\n" +
-	"\averdict\"\x91\x02\n" +
-	"\rJudgeComplete\x12h\n" +
-	"\x15subproblem_is_correct\x18\x01 \x03(\v24.jot.judge.v1.JudgeComplete.SubproblemIsCorrectEntryR\x13subproblemIsCorrect\x12+\n" +
-	"\x11instruction_count\x18\x03 \x01(\x04R\x10instructionCount\x12!\n" +
-	"\fmemory_bytes\x18\x04 \x01(\x04R\vmemoryBytes\x1aF\n" +
-	"\x18SubproblemIsCorrectEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x03R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\",\n" +
-	"\x10JudgeWrongAnswer\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"F\n" +
+	"\vcompile_ble\x18\x04 \x01(\v2\x1d.jot.judge.v1.JudgeCompileBLEH\x00R\n" +
+	"compileBle\x12C\n" +
+	"\fsystem_error\x18\x05 \x01(\v2\x1e.jot.judge.v1.JudgeSystemErrorH\x00R\vsystemErrorB\t\n" +
+	"\averdict\"\xdd\x01\n" +
+	"\rJudgeComplete\x12d\n" +
+	"\x13subproblem_verdicts\x18\x01 \x03(\v23.jot.judge.v1.JudgeComplete.SubproblemVerdictsEntryR\x12subproblemVerdicts\x1af\n" +
+	"\x17SubproblemVerdictsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x03R\x03key\x125\n" +
+	"\x05value\x18\x02 \x01(\v2\x1f.jot.judge.v1.SubproblemVerdictR\x05value:\x028\x01\"\x9f\x03\n" +
+	"\x11SubproblemVerdict\x12;\n" +
+	"\acorrect\x18\x01 \x01(\v2\x1f.jot.judge.v1.SubproblemCorrectH\x00R\acorrect\x12H\n" +
+	"\fwrong_answer\x18\x02 \x01(\v2#.jot.judge.v1.SubproblemWrongAnswerH\x00R\vwrongAnswer\x12M\n" +
+	"\x13time_limit_exceeded\x18\x03 \x01(\v2\x1b.jot.judge.v1.SubproblemTLEH\x00R\x11timeLimitExceeded\x12Q\n" +
+	"\x15memory_limit_exceeded\x18\x04 \x01(\v2\x1b.jot.judge.v1.SubproblemMLEH\x00R\x13memoryLimitExceeded\x12K\n" +
+	"\rruntime_error\x18\x05 \x01(\v2$.jot.judge.v1.SubproblemRuntimeErrorH\x00R\fruntimeErrorB\x14\n" +
+	"\x12subproblem_verdict\"\x81\x01\n" +
+	"\x11SubproblemCorrect\x12/\n" +
+	"\x14max_memory_byte_used\x18\x01 \x01(\x03R\x11maxMemoryByteUsed\x12;\n" +
+	"\x1amax_instruction_count_used\x18\x02 \x01(\x03R\x17maxInstructionCountUsed\"\x17\n" +
+	"\x15SubproblemWrongAnswer\"C\n" +
+	"\rSubproblemTLE\x122\n" +
+	"\x15max_instruction_count\x18\x01 \x01(\x04R\x13maxInstructionCount\"9\n" +
+	"\rSubproblemMLE\x12(\n" +
+	"\x10max_memory_bytes\x18\x01 \x01(\x04R\x0emaxMemoryBytes\"=\n" +
+	"\x16SubproblemRuntimeError\x12#\n" +
+	"\rerror_message\x18\x01 \x01(\tR\ferrorMessage\"F\n" +
 	"\x11JudgeCompileError\x121\n" +
 	"\x14compiler_diagnostics\x18\x01 \x01(\tR\x13compilerDiagnostics\"@\n" +
 	"\x0fJudgeCompileTLE\x12-\n" +
 	"\x13max_compile_time_ms\x18\x01 \x01(\x04R\x10maxCompileTimeMs\"J\n" +
 	"\x0fJudgeCompileBLE\x127\n" +
-	"\x18max_build_artifact_bytes\x18\x01 \x01(\x04R\x15maxBuildArtifactBytes\">\n" +
-	"\bJudgeTLE\x122\n" +
-	"\x15max_instruction_count\x18\x01 \x01(\x04R\x13maxInstructionCount\"4\n" +
-	"\bJudgeMLE\x12(\n" +
-	"\x10max_memory_bytes\x18\x01 \x01(\x04R\x0emaxMemoryBytes\"C\n" +
-	"\bJudgeBLE\x127\n" +
-	"\x18max_build_artifact_bytes\x18\x01 \x01(\x04R\x15maxBuildArtifactBytes\"8\n" +
-	"\x11JudgeRuntimeError\x12#\n" +
-	"\rerror_message\x18\x01 \x01(\tR\ferrorMessage\"7\n" +
+	"\x18max_build_artifact_bytes\x18\x01 \x01(\x04R\x15maxBuildArtifactBytes\"7\n" +
 	"\x10JudgeSystemError\x12#\n" +
 	"\rerror_message\x18\x01 \x01(\tR\ferrorMessage*e\n" +
 	"\bLanguage\x12\x0e\n" +
@@ -1366,20 +1343,20 @@ var file_judge_v1_judge_proto_goTypes = []any{
 	(*JudgeCompiling)(nil),            // 4: jot.judge.v1.JudgeCompiling
 	(*JudgeTestcasesDownloading)(nil), // 5: jot.judge.v1.JudgeTestcasesDownloading
 	(*JudgeRunning)(nil),              // 6: jot.judge.v1.JudgeRunning
-	(*SubproblemJudgeRunning)(nil),    // 7: jot.judge.v1.SubproblemJudgeRunning
-	(*JudgeFinishing)(nil),            // 8: jot.judge.v1.JudgeFinishing
-	(*JudgeResult)(nil),               // 9: jot.judge.v1.JudgeResult
-	(*JudgeComplete)(nil),             // 10: jot.judge.v1.JudgeComplete
-	(*JudgeWrongAnswer)(nil),          // 11: jot.judge.v1.JudgeWrongAnswer
-	(*JudgeCompileError)(nil),         // 12: jot.judge.v1.JudgeCompileError
-	(*JudgeCompileTLE)(nil),           // 13: jot.judge.v1.JudgeCompileTLE
-	(*JudgeCompileBLE)(nil),           // 14: jot.judge.v1.JudgeCompileBLE
-	(*JudgeTLE)(nil),                  // 15: jot.judge.v1.JudgeTLE
-	(*JudgeMLE)(nil),                  // 16: jot.judge.v1.JudgeMLE
-	(*JudgeBLE)(nil),                  // 17: jot.judge.v1.JudgeBLE
-	(*JudgeRuntimeError)(nil),         // 18: jot.judge.v1.JudgeRuntimeError
+	(*JudgeFinishing)(nil),            // 7: jot.judge.v1.JudgeFinishing
+	(*JudgeResult)(nil),               // 8: jot.judge.v1.JudgeResult
+	(*JudgeComplete)(nil),             // 9: jot.judge.v1.JudgeComplete
+	(*SubproblemVerdict)(nil),         // 10: jot.judge.v1.SubproblemVerdict
+	(*SubproblemCorrect)(nil),         // 11: jot.judge.v1.SubproblemCorrect
+	(*SubproblemWrongAnswer)(nil),     // 12: jot.judge.v1.SubproblemWrongAnswer
+	(*SubproblemTLE)(nil),             // 13: jot.judge.v1.SubproblemTLE
+	(*SubproblemMLE)(nil),             // 14: jot.judge.v1.SubproblemMLE
+	(*SubproblemRuntimeError)(nil),    // 15: jot.judge.v1.SubproblemRuntimeError
+	(*JudgeCompileError)(nil),         // 16: jot.judge.v1.JudgeCompileError
+	(*JudgeCompileTLE)(nil),           // 17: jot.judge.v1.JudgeCompileTLE
+	(*JudgeCompileBLE)(nil),           // 18: jot.judge.v1.JudgeCompileBLE
 	(*JudgeSystemError)(nil),          // 19: jot.judge.v1.JudgeSystemError
-	nil,                               // 20: jot.judge.v1.JudgeComplete.SubproblemIsCorrectEntry
+	nil,                               // 20: jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry
 }
 var file_judge_v1_judge_proto_depIdxs = []int32{
 	0,  // 0: jot.judge.v1.JudgeRequest.language:type_name -> jot.judge.v1.Language
@@ -1387,26 +1364,27 @@ var file_judge_v1_judge_proto_depIdxs = []int32{
 	4,  // 2: jot.judge.v1.JudgeEvent.compiling:type_name -> jot.judge.v1.JudgeCompiling
 	5,  // 3: jot.judge.v1.JudgeEvent.testcases_downloading:type_name -> jot.judge.v1.JudgeTestcasesDownloading
 	6,  // 4: jot.judge.v1.JudgeEvent.running:type_name -> jot.judge.v1.JudgeRunning
-	8,  // 5: jot.judge.v1.JudgeEvent.finishing:type_name -> jot.judge.v1.JudgeFinishing
-	9,  // 6: jot.judge.v1.JudgeEvent.result:type_name -> jot.judge.v1.JudgeResult
-	10, // 7: jot.judge.v1.JudgeResult.complete:type_name -> jot.judge.v1.JudgeComplete
-	11, // 8: jot.judge.v1.JudgeResult.wrong_answer:type_name -> jot.judge.v1.JudgeWrongAnswer
-	12, // 9: jot.judge.v1.JudgeResult.compile_error:type_name -> jot.judge.v1.JudgeCompileError
-	13, // 10: jot.judge.v1.JudgeResult.compile_tle:type_name -> jot.judge.v1.JudgeCompileTLE
-	14, // 11: jot.judge.v1.JudgeResult.compile_ble:type_name -> jot.judge.v1.JudgeCompileBLE
-	15, // 12: jot.judge.v1.JudgeResult.time_limit_exceeded:type_name -> jot.judge.v1.JudgeTLE
-	16, // 13: jot.judge.v1.JudgeResult.memory_limit_exceeded:type_name -> jot.judge.v1.JudgeMLE
-	17, // 14: jot.judge.v1.JudgeResult.build_artifact_limit_exceeded:type_name -> jot.judge.v1.JudgeBLE
-	18, // 15: jot.judge.v1.JudgeResult.runtime_error:type_name -> jot.judge.v1.JudgeRuntimeError
-	19, // 16: jot.judge.v1.JudgeResult.system_error:type_name -> jot.judge.v1.JudgeSystemError
-	20, // 17: jot.judge.v1.JudgeComplete.subproblem_is_correct:type_name -> jot.judge.v1.JudgeComplete.SubproblemIsCorrectEntry
-	1,  // 18: jot.judge.v1.JudgeService.Judge:input_type -> jot.judge.v1.JudgeRequest
-	2,  // 19: jot.judge.v1.JudgeService.Judge:output_type -> jot.judge.v1.JudgeEvent
-	19, // [19:20] is the sub-list for method output_type
-	18, // [18:19] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	7,  // 5: jot.judge.v1.JudgeEvent.finishing:type_name -> jot.judge.v1.JudgeFinishing
+	8,  // 6: jot.judge.v1.JudgeEvent.result:type_name -> jot.judge.v1.JudgeResult
+	9,  // 7: jot.judge.v1.JudgeResult.complete:type_name -> jot.judge.v1.JudgeComplete
+	16, // 8: jot.judge.v1.JudgeResult.compile_error:type_name -> jot.judge.v1.JudgeCompileError
+	17, // 9: jot.judge.v1.JudgeResult.compile_tle:type_name -> jot.judge.v1.JudgeCompileTLE
+	18, // 10: jot.judge.v1.JudgeResult.compile_ble:type_name -> jot.judge.v1.JudgeCompileBLE
+	19, // 11: jot.judge.v1.JudgeResult.system_error:type_name -> jot.judge.v1.JudgeSystemError
+	20, // 12: jot.judge.v1.JudgeComplete.subproblem_verdicts:type_name -> jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry
+	11, // 13: jot.judge.v1.SubproblemVerdict.correct:type_name -> jot.judge.v1.SubproblemCorrect
+	12, // 14: jot.judge.v1.SubproblemVerdict.wrong_answer:type_name -> jot.judge.v1.SubproblemWrongAnswer
+	13, // 15: jot.judge.v1.SubproblemVerdict.time_limit_exceeded:type_name -> jot.judge.v1.SubproblemTLE
+	14, // 16: jot.judge.v1.SubproblemVerdict.memory_limit_exceeded:type_name -> jot.judge.v1.SubproblemMLE
+	15, // 17: jot.judge.v1.SubproblemVerdict.runtime_error:type_name -> jot.judge.v1.SubproblemRuntimeError
+	10, // 18: jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry.value:type_name -> jot.judge.v1.SubproblemVerdict
+	1,  // 19: jot.judge.v1.JudgeService.Judge:input_type -> jot.judge.v1.JudgeRequest
+	2,  // 20: jot.judge.v1.JudgeService.Judge:output_type -> jot.judge.v1.JudgeEvent
+	20, // [20:21] is the sub-list for method output_type
+	19, // [19:20] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_judge_v1_judge_proto_init() }
@@ -1422,17 +1400,19 @@ func file_judge_v1_judge_proto_init() {
 		(*JudgeEvent_Finishing)(nil),
 		(*JudgeEvent_Result)(nil),
 	}
-	file_judge_v1_judge_proto_msgTypes[8].OneofWrappers = []any{
+	file_judge_v1_judge_proto_msgTypes[7].OneofWrappers = []any{
 		(*JudgeResult_Complete)(nil),
-		(*JudgeResult_WrongAnswer)(nil),
 		(*JudgeResult_CompileError)(nil),
 		(*JudgeResult_CompileTle)(nil),
 		(*JudgeResult_CompileBle)(nil),
-		(*JudgeResult_TimeLimitExceeded)(nil),
-		(*JudgeResult_MemoryLimitExceeded)(nil),
-		(*JudgeResult_BuildArtifactLimitExceeded)(nil),
-		(*JudgeResult_RuntimeError)(nil),
 		(*JudgeResult_SystemError)(nil),
+	}
+	file_judge_v1_judge_proto_msgTypes[9].OneofWrappers = []any{
+		(*SubproblemVerdict_Correct)(nil),
+		(*SubproblemVerdict_WrongAnswer)(nil),
+		(*SubproblemVerdict_TimeLimitExceeded)(nil),
+		(*SubproblemVerdict_MemoryLimitExceeded)(nil),
+		(*SubproblemVerdict_RuntimeError)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
