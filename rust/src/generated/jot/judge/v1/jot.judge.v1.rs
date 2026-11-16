@@ -24,7 +24,7 @@ pub struct JudgeRequest {
 }
 // Output
 
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeEvent {
     #[prost(int64, tag = "1")]
     pub request_id: i64,
@@ -33,7 +33,7 @@ pub struct JudgeEvent {
 }
 /// Nested message and enum types in `JudgeEvent`.
 pub mod judge_event {
-    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Payload {
         #[prost(message, tag = "2")]
         Received(super::JudgeReceived),
@@ -75,14 +75,14 @@ pub struct SubproblemJudgeRunning {
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct JudgeFinishing {
 }
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeResult {
     #[prost(oneof = "judge_result::Verdict", tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
     pub verdict: ::core::option::Option<judge_result::Verdict>,
 }
 /// Nested message and enum types in `JudgeResult`.
 pub mod judge_result {
-    #[derive(Clone, PartialEq, Eq, Hash, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Verdict {
         #[prost(message, tag = "1")]
         Complete(super::JudgeComplete),
@@ -106,12 +106,10 @@ pub mod judge_result {
         SystemError(super::JudgeSystemError),
     }
 }
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct JudgeComplete {
-    #[prost(uint32, tag = "1")]
-    pub correct_subproblems: u32,
-    #[prost(uint32, tag = "2")]
-    pub total_subproblems: u32,
+    #[prost(map = "int64, bool", tag = "1")]
+    pub subproblem_is_correct: ::std::collections::HashMap<i64, bool>,
     #[prost(uint64, tag = "3")]
     pub instruction_count: u64,
     #[prost(uint64, tag = "4")]

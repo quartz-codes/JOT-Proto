@@ -81,8 +81,7 @@ message JudgeResult {
 }
 
 message JudgeComplete {
-  uint32 correct_subproblems = 1;
-  uint32 total_subproblems = 2;
+  map<int64, bool> subproblem_is_correct = 1;
   uint64 instruction_count = 3;
   uint64 memory_bytes = 4;
 }
