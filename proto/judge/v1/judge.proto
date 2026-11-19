@@ -23,6 +23,7 @@ message JudgeRequest {
 }
 
 message Subproblem {
+  int64 subproblem_id = 1; 
   TestcaseOrigin testcase_origin = 2;
   string testcase_url = 3;
   Checker checker = 4;

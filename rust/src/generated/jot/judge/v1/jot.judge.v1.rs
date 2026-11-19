@@ -29,6 +29,8 @@ pub struct JudgeRequest {
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Subproblem {
+    #[prost(int64, tag = "1")]
+    pub subproblem_id: i64,
     #[prost(enumeration = "TestcaseOrigin", tag = "2")]
     pub testcase_origin: i32,
     #[prost(string, tag = "3")]

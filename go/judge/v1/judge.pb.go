@@ -281,6 +281,7 @@ func (x *JudgeRequest) GetMemoryBytesLimit() uint64 {
 
 type Subproblem struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubproblemId   int64                  `protobuf:"varint,1,opt,name=subproblem_id,json=subproblemId,proto3" json:"subproblem_id,omitempty"`
 	TestcaseOrigin TestcaseOrigin         `protobuf:"varint,2,opt,name=testcase_origin,json=testcaseOrigin,proto3,enum=jot.judge.v1.TestcaseOrigin" json:"testcase_origin,omitempty"`
 	TestcaseUrl    string                 `protobuf:"bytes,3,opt,name=testcase_url,json=testcaseUrl,proto3" json:"testcase_url,omitempty"`
 	Checker        Checker                `protobuf:"varint,4,opt,name=checker,proto3,enum=jot.judge.v1.Checker" json:"checker,omitempty"`
@@ -316,6 +317,13 @@ func (x *Subproblem) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Subproblem.ProtoReflect.Descriptor instead.
 func (*Subproblem) Descriptor() ([]byte, []int) {
 	return file_judge_v1_judge_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Subproblem) GetSubproblemId() int64 {
+	if x != nil {
+		return x.SubproblemId
+	}
+	return 0
 }
 
 func (x *Subproblem) GetTestcaseOrigin() TestcaseOrigin {
@@ -1359,9 +1367,10 @@ const file_judge_v1_judge_proto_rawDesc = "" +
 	" \x01(\x04R\x10memoryBytesLimit\x1aX\n" +
 	"\x10SubproblemsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x03R\x03key\x12.\n" +
-	"\x05value\x18\x02 \x01(\v2\x18.jot.judge.v1.SubproblemR\x05value:\x028\x01\"\xa7\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x18.jot.judge.v1.SubproblemR\x05value:\x028\x01\"\xcc\x01\n" +
 	"\n" +
-	"Subproblem\x12E\n" +
+	"Subproblem\x12#\n" +
+	"\rsubproblem_id\x18\x01 \x01(\x03R\fsubproblemId\x12E\n" +
 	"\x0ftestcase_origin\x18\x02 \x01(\x0e2\x1c.jot.judge.v1.TestcaseOriginR\x0etestcaseOrigin\x12!\n" +
 	"\ftestcase_url\x18\x03 \x01(\tR\vtestcaseUrl\x12/\n" +
 	"\achecker\x18\x04 \x01(\x0e2\x15.jot.judge.v1.CheckerR\achecker\"\xfc\x02\n" +
