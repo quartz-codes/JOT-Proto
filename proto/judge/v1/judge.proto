@@ -10,16 +10,30 @@ service JudgeService {
 
 message JudgeRequest {
   // Set by the backend to correlate the request, stream, and logs.
-  int64 request_id = 1;
-  int64 problem_id = 2;
-  repeated int64 subproblem_ids = 3;
-  Language language = 4;
-  string source_code = 5;
-  uint64 compile_time_ms_limit = 6;
-  uint64 build_artifact_bytes_limit = 7;
-  uint64 instruction_count_limit = 8;
-  uint64 memory_bytes_limit = 9;
-  
+  int64 request_id = 1; // Unique ID for each Judge request. Must match JudgeEvent.request_id in the response.
+  int64 submission_id = 2; // Unique ID for each submission. A single submission can be judged multiple times due to rejudging. Must match JudgeEvent.submission_id in the response.
+  int64 problem_id = 3;
+  map<int64, Subproblem> subproblems= 4;
+  Language language = 5;
+  string source_code = 6;
+  uint64 compile_time_ms_limit = 7;
+  uint64 build_artifact_bytes_limit = 8;
+  uint64 instruction_count_limit = 9;
+  uint64 memory_bytes_limit = 10;
+}
+
+message Subproblem {
+  TestcaseOrigin testcase_origin = 2;
+  string testcase_url = 3;
+  Checker checker = 4;
+}
+
+enum TestcaseOrigin {
+  HTTPS = 0;
+}
+
+enum Checker {
+  LCMP = 0;
 }
 
 enum Language {

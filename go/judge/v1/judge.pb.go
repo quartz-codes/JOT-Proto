@@ -21,6 +21,92 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type TestcaseOrigin int32
+
+const (
+	TestcaseOrigin_HTTPS TestcaseOrigin = 0
+)
+
+// Enum value maps for TestcaseOrigin.
+var (
+	TestcaseOrigin_name = map[int32]string{
+		0: "HTTPS",
+	}
+	TestcaseOrigin_value = map[string]int32{
+		"HTTPS": 0,
+	}
+)
+
+func (x TestcaseOrigin) Enum() *TestcaseOrigin {
+	p := new(TestcaseOrigin)
+	*p = x
+	return p
+}
+
+func (x TestcaseOrigin) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TestcaseOrigin) Descriptor() protoreflect.EnumDescriptor {
+	return file_judge_v1_judge_proto_enumTypes[0].Descriptor()
+}
+
+func (TestcaseOrigin) Type() protoreflect.EnumType {
+	return &file_judge_v1_judge_proto_enumTypes[0]
+}
+
+func (x TestcaseOrigin) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TestcaseOrigin.Descriptor instead.
+func (TestcaseOrigin) EnumDescriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{0}
+}
+
+type Checker int32
+
+const (
+	Checker_LCMP Checker = 0
+)
+
+// Enum value maps for Checker.
+var (
+	Checker_name = map[int32]string{
+		0: "LCMP",
+	}
+	Checker_value = map[string]int32{
+		"LCMP": 0,
+	}
+)
+
+func (x Checker) Enum() *Checker {
+	p := new(Checker)
+	*p = x
+	return p
+}
+
+func (x Checker) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Checker) Descriptor() protoreflect.EnumDescriptor {
+	return file_judge_v1_judge_proto_enumTypes[1].Descriptor()
+}
+
+func (Checker) Type() protoreflect.EnumType {
+	return &file_judge_v1_judge_proto_enumTypes[1]
+}
+
+func (x Checker) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Checker.Descriptor instead.
+func (Checker) EnumDescriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{1}
+}
+
 type Language int32
 
 const (
@@ -60,11 +146,11 @@ func (x Language) String() string {
 }
 
 func (Language) Descriptor() protoreflect.EnumDescriptor {
-	return file_judge_v1_judge_proto_enumTypes[0].Descriptor()
+	return file_judge_v1_judge_proto_enumTypes[2].Descriptor()
 }
 
 func (Language) Type() protoreflect.EnumType {
-	return &file_judge_v1_judge_proto_enumTypes[0]
+	return &file_judge_v1_judge_proto_enumTypes[2]
 }
 
 func (x Language) Number() protoreflect.EnumNumber {
@@ -73,21 +159,22 @@ func (x Language) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Language.Descriptor instead.
 func (Language) EnumDescriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{0}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{2}
 }
 
 type JudgeRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Set by the backend to correlate the request, stream, and logs.
-	RequestId               int64    `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	ProblemId               int64    `protobuf:"varint,2,opt,name=problem_id,json=problemId,proto3" json:"problem_id,omitempty"`
-	SubproblemIds           []int64  `protobuf:"varint,3,rep,packed,name=subproblem_ids,json=subproblemIds,proto3" json:"subproblem_ids,omitempty"`
-	Language                Language `protobuf:"varint,4,opt,name=language,proto3,enum=jot.judge.v1.Language" json:"language,omitempty"`
-	SourceCode              string   `protobuf:"bytes,5,opt,name=source_code,json=sourceCode,proto3" json:"source_code,omitempty"`
-	CompileTimeMsLimit      uint64   `protobuf:"varint,6,opt,name=compile_time_ms_limit,json=compileTimeMsLimit,proto3" json:"compile_time_ms_limit,omitempty"`
-	BuildArtifactBytesLimit uint64   `protobuf:"varint,7,opt,name=build_artifact_bytes_limit,json=buildArtifactBytesLimit,proto3" json:"build_artifact_bytes_limit,omitempty"`
-	InstructionCountLimit   uint64   `protobuf:"varint,8,opt,name=instruction_count_limit,json=instructionCountLimit,proto3" json:"instruction_count_limit,omitempty"`
-	MemoryBytesLimit        uint64   `protobuf:"varint,9,opt,name=memory_bytes_limit,json=memoryBytesLimit,proto3" json:"memory_bytes_limit,omitempty"`
+	RequestId               int64                 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`          // Unique ID for each Judge request. Must match JudgeEvent.request_id in the response.
+	SubmissionId            int64                 `protobuf:"varint,2,opt,name=submission_id,json=submissionId,proto3" json:"submission_id,omitempty"` // Unique ID for each submission. A single submission can be judged multiple times due to rejudging. Must match JudgeEvent.submission_id in the response.
+	ProblemId               int64                 `protobuf:"varint,3,opt,name=problem_id,json=problemId,proto3" json:"problem_id,omitempty"`
+	Subproblems             map[int64]*Subproblem `protobuf:"bytes,4,rep,name=subproblems,proto3" json:"subproblems,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Language                Language              `protobuf:"varint,5,opt,name=language,proto3,enum=jot.judge.v1.Language" json:"language,omitempty"`
+	SourceCode              string                `protobuf:"bytes,6,opt,name=source_code,json=sourceCode,proto3" json:"source_code,omitempty"`
+	CompileTimeMsLimit      uint64                `protobuf:"varint,7,opt,name=compile_time_ms_limit,json=compileTimeMsLimit,proto3" json:"compile_time_ms_limit,omitempty"`
+	BuildArtifactBytesLimit uint64                `protobuf:"varint,8,opt,name=build_artifact_bytes_limit,json=buildArtifactBytesLimit,proto3" json:"build_artifact_bytes_limit,omitempty"`
+	InstructionCountLimit   uint64                `protobuf:"varint,9,opt,name=instruction_count_limit,json=instructionCountLimit,proto3" json:"instruction_count_limit,omitempty"`
+	MemoryBytesLimit        uint64                `protobuf:"varint,10,opt,name=memory_bytes_limit,json=memoryBytesLimit,proto3" json:"memory_bytes_limit,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -129,6 +216,13 @@ func (x *JudgeRequest) GetRequestId() int64 {
 	return 0
 }
 
+func (x *JudgeRequest) GetSubmissionId() int64 {
+	if x != nil {
+		return x.SubmissionId
+	}
+	return 0
+}
+
 func (x *JudgeRequest) GetProblemId() int64 {
 	if x != nil {
 		return x.ProblemId
@@ -136,9 +230,9 @@ func (x *JudgeRequest) GetProblemId() int64 {
 	return 0
 }
 
-func (x *JudgeRequest) GetSubproblemIds() []int64 {
+func (x *JudgeRequest) GetSubproblems() map[int64]*Subproblem {
 	if x != nil {
-		return x.SubproblemIds
+		return x.Subproblems
 	}
 	return nil
 }
@@ -185,6 +279,66 @@ func (x *JudgeRequest) GetMemoryBytesLimit() uint64 {
 	return 0
 }
 
+type Subproblem struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	TestcaseOrigin TestcaseOrigin         `protobuf:"varint,2,opt,name=testcase_origin,json=testcaseOrigin,proto3,enum=jot.judge.v1.TestcaseOrigin" json:"testcase_origin,omitempty"`
+	TestcaseUrl    string                 `protobuf:"bytes,3,opt,name=testcase_url,json=testcaseUrl,proto3" json:"testcase_url,omitempty"`
+	Checker        Checker                `protobuf:"varint,4,opt,name=checker,proto3,enum=jot.judge.v1.Checker" json:"checker,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Subproblem) Reset() {
+	*x = Subproblem{}
+	mi := &file_judge_v1_judge_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Subproblem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Subproblem) ProtoMessage() {}
+
+func (x *Subproblem) ProtoReflect() protoreflect.Message {
+	mi := &file_judge_v1_judge_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Subproblem.ProtoReflect.Descriptor instead.
+func (*Subproblem) Descriptor() ([]byte, []int) {
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Subproblem) GetTestcaseOrigin() TestcaseOrigin {
+	if x != nil {
+		return x.TestcaseOrigin
+	}
+	return TestcaseOrigin_HTTPS
+}
+
+func (x *Subproblem) GetTestcaseUrl() string {
+	if x != nil {
+		return x.TestcaseUrl
+	}
+	return ""
+}
+
+func (x *Subproblem) GetChecker() Checker {
+	if x != nil {
+		return x.Checker
+	}
+	return Checker_LCMP
+}
+
 type JudgeEvent struct {
 	state     protoimpl.MessageState `protogen:"open.v1"`
 	RequestId int64                  `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
@@ -202,7 +356,7 @@ type JudgeEvent struct {
 
 func (x *JudgeEvent) Reset() {
 	*x = JudgeEvent{}
-	mi := &file_judge_v1_judge_proto_msgTypes[1]
+	mi := &file_judge_v1_judge_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -214,7 +368,7 @@ func (x *JudgeEvent) String() string {
 func (*JudgeEvent) ProtoMessage() {}
 
 func (x *JudgeEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[1]
+	mi := &file_judge_v1_judge_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -227,7 +381,7 @@ func (x *JudgeEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeEvent.ProtoReflect.Descriptor instead.
 func (*JudgeEvent) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{1}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *JudgeEvent) GetRequestId() int64 {
@@ -331,7 +485,7 @@ type JudgeReceived struct {
 
 func (x *JudgeReceived) Reset() {
 	*x = JudgeReceived{}
-	mi := &file_judge_v1_judge_proto_msgTypes[2]
+	mi := &file_judge_v1_judge_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -343,7 +497,7 @@ func (x *JudgeReceived) String() string {
 func (*JudgeReceived) ProtoMessage() {}
 
 func (x *JudgeReceived) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[2]
+	mi := &file_judge_v1_judge_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -356,7 +510,7 @@ func (x *JudgeReceived) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeReceived.ProtoReflect.Descriptor instead.
 func (*JudgeReceived) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{2}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{3}
 }
 
 type JudgeCompiling struct {
@@ -367,7 +521,7 @@ type JudgeCompiling struct {
 
 func (x *JudgeCompiling) Reset() {
 	*x = JudgeCompiling{}
-	mi := &file_judge_v1_judge_proto_msgTypes[3]
+	mi := &file_judge_v1_judge_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -379,7 +533,7 @@ func (x *JudgeCompiling) String() string {
 func (*JudgeCompiling) ProtoMessage() {}
 
 func (x *JudgeCompiling) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[3]
+	mi := &file_judge_v1_judge_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -392,7 +546,7 @@ func (x *JudgeCompiling) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompiling.ProtoReflect.Descriptor instead.
 func (*JudgeCompiling) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{3}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{4}
 }
 
 type JudgeTestcasesDownloading struct {
@@ -403,7 +557,7 @@ type JudgeTestcasesDownloading struct {
 
 func (x *JudgeTestcasesDownloading) Reset() {
 	*x = JudgeTestcasesDownloading{}
-	mi := &file_judge_v1_judge_proto_msgTypes[4]
+	mi := &file_judge_v1_judge_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -415,7 +569,7 @@ func (x *JudgeTestcasesDownloading) String() string {
 func (*JudgeTestcasesDownloading) ProtoMessage() {}
 
 func (x *JudgeTestcasesDownloading) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[4]
+	mi := &file_judge_v1_judge_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -428,7 +582,7 @@ func (x *JudgeTestcasesDownloading) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeTestcasesDownloading.ProtoReflect.Descriptor instead.
 func (*JudgeTestcasesDownloading) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{4}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{5}
 }
 
 type JudgeRunning struct {
@@ -441,7 +595,7 @@ type JudgeRunning struct {
 
 func (x *JudgeRunning) Reset() {
 	*x = JudgeRunning{}
-	mi := &file_judge_v1_judge_proto_msgTypes[5]
+	mi := &file_judge_v1_judge_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -453,7 +607,7 @@ func (x *JudgeRunning) String() string {
 func (*JudgeRunning) ProtoMessage() {}
 
 func (x *JudgeRunning) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[5]
+	mi := &file_judge_v1_judge_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -466,7 +620,7 @@ func (x *JudgeRunning) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeRunning.ProtoReflect.Descriptor instead.
 func (*JudgeRunning) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{5}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *JudgeRunning) GetCompletedCases() uint32 {
@@ -499,7 +653,7 @@ type JudgeResult struct {
 
 func (x *JudgeResult) Reset() {
 	*x = JudgeResult{}
-	mi := &file_judge_v1_judge_proto_msgTypes[6]
+	mi := &file_judge_v1_judge_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -511,7 +665,7 @@ func (x *JudgeResult) String() string {
 func (*JudgeResult) ProtoMessage() {}
 
 func (x *JudgeResult) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[6]
+	mi := &file_judge_v1_judge_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -524,7 +678,7 @@ func (x *JudgeResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeResult.ProtoReflect.Descriptor instead.
 func (*JudgeResult) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{6}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *JudgeResult) GetVerdict() isJudgeResult_Verdict {
@@ -622,7 +776,7 @@ type JudgeComplete struct {
 
 func (x *JudgeComplete) Reset() {
 	*x = JudgeComplete{}
-	mi := &file_judge_v1_judge_proto_msgTypes[7]
+	mi := &file_judge_v1_judge_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -634,7 +788,7 @@ func (x *JudgeComplete) String() string {
 func (*JudgeComplete) ProtoMessage() {}
 
 func (x *JudgeComplete) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[7]
+	mi := &file_judge_v1_judge_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -647,7 +801,7 @@ func (x *JudgeComplete) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeComplete.ProtoReflect.Descriptor instead.
 func (*JudgeComplete) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{7}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *JudgeComplete) GetSubproblemVerdicts() map[int64]*SubproblemVerdict {
@@ -673,7 +827,7 @@ type SubproblemVerdict struct {
 
 func (x *SubproblemVerdict) Reset() {
 	*x = SubproblemVerdict{}
-	mi := &file_judge_v1_judge_proto_msgTypes[8]
+	mi := &file_judge_v1_judge_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -685,7 +839,7 @@ func (x *SubproblemVerdict) String() string {
 func (*SubproblemVerdict) ProtoMessage() {}
 
 func (x *SubproblemVerdict) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[8]
+	mi := &file_judge_v1_judge_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -698,7 +852,7 @@ func (x *SubproblemVerdict) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubproblemVerdict.ProtoReflect.Descriptor instead.
 func (*SubproblemVerdict) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{8}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SubproblemVerdict) GetSubproblemVerdict() isSubproblemVerdict_SubproblemVerdict {
@@ -797,7 +951,7 @@ type SubproblemCorrect struct {
 
 func (x *SubproblemCorrect) Reset() {
 	*x = SubproblemCorrect{}
-	mi := &file_judge_v1_judge_proto_msgTypes[9]
+	mi := &file_judge_v1_judge_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -809,7 +963,7 @@ func (x *SubproblemCorrect) String() string {
 func (*SubproblemCorrect) ProtoMessage() {}
 
 func (x *SubproblemCorrect) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[9]
+	mi := &file_judge_v1_judge_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -822,7 +976,7 @@ func (x *SubproblemCorrect) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubproblemCorrect.ProtoReflect.Descriptor instead.
 func (*SubproblemCorrect) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{9}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SubproblemCorrect) GetMaxMemoryByteUsed() uint64 {
@@ -847,7 +1001,7 @@ type SubproblemWrongAnswer struct {
 
 func (x *SubproblemWrongAnswer) Reset() {
 	*x = SubproblemWrongAnswer{}
-	mi := &file_judge_v1_judge_proto_msgTypes[10]
+	mi := &file_judge_v1_judge_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -859,7 +1013,7 @@ func (x *SubproblemWrongAnswer) String() string {
 func (*SubproblemWrongAnswer) ProtoMessage() {}
 
 func (x *SubproblemWrongAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[10]
+	mi := &file_judge_v1_judge_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -872,7 +1026,7 @@ func (x *SubproblemWrongAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubproblemWrongAnswer.ProtoReflect.Descriptor instead.
 func (*SubproblemWrongAnswer) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{10}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{11}
 }
 
 type SubproblemTLE struct {
@@ -884,7 +1038,7 @@ type SubproblemTLE struct {
 
 func (x *SubproblemTLE) Reset() {
 	*x = SubproblemTLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[11]
+	mi := &file_judge_v1_judge_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -896,7 +1050,7 @@ func (x *SubproblemTLE) String() string {
 func (*SubproblemTLE) ProtoMessage() {}
 
 func (x *SubproblemTLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[11]
+	mi := &file_judge_v1_judge_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -909,7 +1063,7 @@ func (x *SubproblemTLE) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubproblemTLE.ProtoReflect.Descriptor instead.
 func (*SubproblemTLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{11}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *SubproblemTLE) GetMaxInstructionCount() uint64 {
@@ -928,7 +1082,7 @@ type SubproblemMLE struct {
 
 func (x *SubproblemMLE) Reset() {
 	*x = SubproblemMLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[12]
+	mi := &file_judge_v1_judge_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -940,7 +1094,7 @@ func (x *SubproblemMLE) String() string {
 func (*SubproblemMLE) ProtoMessage() {}
 
 func (x *SubproblemMLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[12]
+	mi := &file_judge_v1_judge_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -953,7 +1107,7 @@ func (x *SubproblemMLE) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubproblemMLE.ProtoReflect.Descriptor instead.
 func (*SubproblemMLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{12}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SubproblemMLE) GetMaxMemoryBytes() uint64 {
@@ -972,7 +1126,7 @@ type SubproblemRuntimeError struct {
 
 func (x *SubproblemRuntimeError) Reset() {
 	*x = SubproblemRuntimeError{}
-	mi := &file_judge_v1_judge_proto_msgTypes[13]
+	mi := &file_judge_v1_judge_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -984,7 +1138,7 @@ func (x *SubproblemRuntimeError) String() string {
 func (*SubproblemRuntimeError) ProtoMessage() {}
 
 func (x *SubproblemRuntimeError) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[13]
+	mi := &file_judge_v1_judge_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -997,7 +1151,7 @@ func (x *SubproblemRuntimeError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubproblemRuntimeError.ProtoReflect.Descriptor instead.
 func (*SubproblemRuntimeError) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{13}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *SubproblemRuntimeError) GetErrorMessage() string {
@@ -1016,7 +1170,7 @@ type JudgeCompileError struct {
 
 func (x *JudgeCompileError) Reset() {
 	*x = JudgeCompileError{}
-	mi := &file_judge_v1_judge_proto_msgTypes[14]
+	mi := &file_judge_v1_judge_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1028,7 +1182,7 @@ func (x *JudgeCompileError) String() string {
 func (*JudgeCompileError) ProtoMessage() {}
 
 func (x *JudgeCompileError) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[14]
+	mi := &file_judge_v1_judge_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1041,7 +1195,7 @@ func (x *JudgeCompileError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompileError.ProtoReflect.Descriptor instead.
 func (*JudgeCompileError) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{14}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *JudgeCompileError) GetCompilerDiagnostics() string {
@@ -1060,7 +1214,7 @@ type JudgeCompileTLE struct {
 
 func (x *JudgeCompileTLE) Reset() {
 	*x = JudgeCompileTLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[15]
+	mi := &file_judge_v1_judge_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1072,7 +1226,7 @@ func (x *JudgeCompileTLE) String() string {
 func (*JudgeCompileTLE) ProtoMessage() {}
 
 func (x *JudgeCompileTLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[15]
+	mi := &file_judge_v1_judge_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1085,7 +1239,7 @@ func (x *JudgeCompileTLE) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompileTLE.ProtoReflect.Descriptor instead.
 func (*JudgeCompileTLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{15}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *JudgeCompileTLE) GetMaxCompileTimeMs() uint64 {
@@ -1104,7 +1258,7 @@ type JudgeCompileBLE struct {
 
 func (x *JudgeCompileBLE) Reset() {
 	*x = JudgeCompileBLE{}
-	mi := &file_judge_v1_judge_proto_msgTypes[16]
+	mi := &file_judge_v1_judge_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1116,7 +1270,7 @@ func (x *JudgeCompileBLE) String() string {
 func (*JudgeCompileBLE) ProtoMessage() {}
 
 func (x *JudgeCompileBLE) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[16]
+	mi := &file_judge_v1_judge_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1129,7 +1283,7 @@ func (x *JudgeCompileBLE) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeCompileBLE.ProtoReflect.Descriptor instead.
 func (*JudgeCompileBLE) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{16}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *JudgeCompileBLE) GetMaxBuildArtifactBytes() uint64 {
@@ -1148,7 +1302,7 @@ type JudgeSystemError struct {
 
 func (x *JudgeSystemError) Reset() {
 	*x = JudgeSystemError{}
-	mi := &file_judge_v1_judge_proto_msgTypes[17]
+	mi := &file_judge_v1_judge_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1160,7 +1314,7 @@ func (x *JudgeSystemError) String() string {
 func (*JudgeSystemError) ProtoMessage() {}
 
 func (x *JudgeSystemError) ProtoReflect() protoreflect.Message {
-	mi := &file_judge_v1_judge_proto_msgTypes[17]
+	mi := &file_judge_v1_judge_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1173,7 +1327,7 @@ func (x *JudgeSystemError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JudgeSystemError.ProtoReflect.Descriptor instead.
 func (*JudgeSystemError) Descriptor() ([]byte, []int) {
-	return file_judge_v1_judge_proto_rawDescGZIP(), []int{17}
+	return file_judge_v1_judge_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *JudgeSystemError) GetErrorMessage() string {
@@ -1187,20 +1341,30 @@ var File_judge_v1_judge_proto protoreflect.FileDescriptor
 
 const file_judge_v1_judge_proto_rawDesc = "" +
 	"\n" +
-	"\x14judge/v1/judge.proto\x12\fjot.judge.v1\"\x9e\x03\n" +
+	"\x14judge/v1/judge.proto\x12\fjot.judge.v1\"\xc5\x04\n" +
 	"\fJudgeRequest\x12\x1d\n" +
 	"\n" +
-	"request_id\x18\x01 \x01(\x03R\trequestId\x12\x1d\n" +
+	"request_id\x18\x01 \x01(\x03R\trequestId\x12#\n" +
+	"\rsubmission_id\x18\x02 \x01(\x03R\fsubmissionId\x12\x1d\n" +
 	"\n" +
-	"problem_id\x18\x02 \x01(\x03R\tproblemId\x12%\n" +
-	"\x0esubproblem_ids\x18\x03 \x03(\x03R\rsubproblemIds\x122\n" +
-	"\blanguage\x18\x04 \x01(\x0e2\x16.jot.judge.v1.LanguageR\blanguage\x12\x1f\n" +
-	"\vsource_code\x18\x05 \x01(\tR\n" +
+	"problem_id\x18\x03 \x01(\x03R\tproblemId\x12M\n" +
+	"\vsubproblems\x18\x04 \x03(\v2+.jot.judge.v1.JudgeRequest.SubproblemsEntryR\vsubproblems\x122\n" +
+	"\blanguage\x18\x05 \x01(\x0e2\x16.jot.judge.v1.LanguageR\blanguage\x12\x1f\n" +
+	"\vsource_code\x18\x06 \x01(\tR\n" +
 	"sourceCode\x121\n" +
-	"\x15compile_time_ms_limit\x18\x06 \x01(\x04R\x12compileTimeMsLimit\x12;\n" +
-	"\x1abuild_artifact_bytes_limit\x18\a \x01(\x04R\x17buildArtifactBytesLimit\x126\n" +
-	"\x17instruction_count_limit\x18\b \x01(\x04R\x15instructionCountLimit\x12,\n" +
-	"\x12memory_bytes_limit\x18\t \x01(\x04R\x10memoryBytesLimit\"\xfc\x02\n" +
+	"\x15compile_time_ms_limit\x18\a \x01(\x04R\x12compileTimeMsLimit\x12;\n" +
+	"\x1abuild_artifact_bytes_limit\x18\b \x01(\x04R\x17buildArtifactBytesLimit\x126\n" +
+	"\x17instruction_count_limit\x18\t \x01(\x04R\x15instructionCountLimit\x12,\n" +
+	"\x12memory_bytes_limit\x18\n" +
+	" \x01(\x04R\x10memoryBytesLimit\x1aX\n" +
+	"\x10SubproblemsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x03R\x03key\x12.\n" +
+	"\x05value\x18\x02 \x01(\v2\x18.jot.judge.v1.SubproblemR\x05value:\x028\x01\"\xa7\x01\n" +
+	"\n" +
+	"Subproblem\x12E\n" +
+	"\x0ftestcase_origin\x18\x02 \x01(\x0e2\x1c.jot.judge.v1.TestcaseOriginR\x0etestcaseOrigin\x12!\n" +
+	"\ftestcase_url\x18\x03 \x01(\tR\vtestcaseUrl\x12/\n" +
+	"\achecker\x18\x04 \x01(\x0e2\x15.jot.judge.v1.CheckerR\achecker\"\xfc\x02\n" +
 	"\n" +
 	"JudgeEvent\x12\x1d\n" +
 	"\n" +
@@ -1256,7 +1420,11 @@ const file_judge_v1_judge_proto_rawDesc = "" +
 	"\x0fJudgeCompileBLE\x127\n" +
 	"\x18max_build_artifact_bytes\x18\x01 \x01(\x04R\x15maxBuildArtifactBytes\"7\n" +
 	"\x10JudgeSystemError\x12#\n" +
-	"\rerror_message\x18\x01 \x01(\tR\ferrorMessage*e\n" +
+	"\rerror_message\x18\x01 \x01(\tR\ferrorMessage*\x1b\n" +
+	"\x0eTestcaseOrigin\x12\t\n" +
+	"\x05HTTPS\x10\x00*\x13\n" +
+	"\aChecker\x12\b\n" +
+	"\x04LCMP\x10\x00*e\n" +
 	"\bLanguage\x12\x0e\n" +
 	"\n" +
 	"LANGUAGE_C\x10\x00\x12\x10\n" +
@@ -1279,56 +1447,64 @@ func file_judge_v1_judge_proto_rawDescGZIP() []byte {
 	return file_judge_v1_judge_proto_rawDescData
 }
 
-var file_judge_v1_judge_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_judge_v1_judge_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_judge_v1_judge_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_judge_v1_judge_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_judge_v1_judge_proto_goTypes = []any{
-	(Language)(0),                     // 0: jot.judge.v1.Language
-	(*JudgeRequest)(nil),              // 1: jot.judge.v1.JudgeRequest
-	(*JudgeEvent)(nil),                // 2: jot.judge.v1.JudgeEvent
-	(*JudgeReceived)(nil),             // 3: jot.judge.v1.JudgeReceived
-	(*JudgeCompiling)(nil),            // 4: jot.judge.v1.JudgeCompiling
-	(*JudgeTestcasesDownloading)(nil), // 5: jot.judge.v1.JudgeTestcasesDownloading
-	(*JudgeRunning)(nil),              // 6: jot.judge.v1.JudgeRunning
-	(*JudgeResult)(nil),               // 7: jot.judge.v1.JudgeResult
-	(*JudgeComplete)(nil),             // 8: jot.judge.v1.JudgeComplete
-	(*SubproblemVerdict)(nil),         // 9: jot.judge.v1.SubproblemVerdict
-	(*SubproblemCorrect)(nil),         // 10: jot.judge.v1.SubproblemCorrect
-	(*SubproblemWrongAnswer)(nil),     // 11: jot.judge.v1.SubproblemWrongAnswer
-	(*SubproblemTLE)(nil),             // 12: jot.judge.v1.SubproblemTLE
-	(*SubproblemMLE)(nil),             // 13: jot.judge.v1.SubproblemMLE
-	(*SubproblemRuntimeError)(nil),    // 14: jot.judge.v1.SubproblemRuntimeError
-	(*JudgeCompileError)(nil),         // 15: jot.judge.v1.JudgeCompileError
-	(*JudgeCompileTLE)(nil),           // 16: jot.judge.v1.JudgeCompileTLE
-	(*JudgeCompileBLE)(nil),           // 17: jot.judge.v1.JudgeCompileBLE
-	(*JudgeSystemError)(nil),          // 18: jot.judge.v1.JudgeSystemError
-	nil,                               // 19: jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry
+	(TestcaseOrigin)(0),               // 0: jot.judge.v1.TestcaseOrigin
+	(Checker)(0),                      // 1: jot.judge.v1.Checker
+	(Language)(0),                     // 2: jot.judge.v1.Language
+	(*JudgeRequest)(nil),              // 3: jot.judge.v1.JudgeRequest
+	(*Subproblem)(nil),                // 4: jot.judge.v1.Subproblem
+	(*JudgeEvent)(nil),                // 5: jot.judge.v1.JudgeEvent
+	(*JudgeReceived)(nil),             // 6: jot.judge.v1.JudgeReceived
+	(*JudgeCompiling)(nil),            // 7: jot.judge.v1.JudgeCompiling
+	(*JudgeTestcasesDownloading)(nil), // 8: jot.judge.v1.JudgeTestcasesDownloading
+	(*JudgeRunning)(nil),              // 9: jot.judge.v1.JudgeRunning
+	(*JudgeResult)(nil),               // 10: jot.judge.v1.JudgeResult
+	(*JudgeComplete)(nil),             // 11: jot.judge.v1.JudgeComplete
+	(*SubproblemVerdict)(nil),         // 12: jot.judge.v1.SubproblemVerdict
+	(*SubproblemCorrect)(nil),         // 13: jot.judge.v1.SubproblemCorrect
+	(*SubproblemWrongAnswer)(nil),     // 14: jot.judge.v1.SubproblemWrongAnswer
+	(*SubproblemTLE)(nil),             // 15: jot.judge.v1.SubproblemTLE
+	(*SubproblemMLE)(nil),             // 16: jot.judge.v1.SubproblemMLE
+	(*SubproblemRuntimeError)(nil),    // 17: jot.judge.v1.SubproblemRuntimeError
+	(*JudgeCompileError)(nil),         // 18: jot.judge.v1.JudgeCompileError
+	(*JudgeCompileTLE)(nil),           // 19: jot.judge.v1.JudgeCompileTLE
+	(*JudgeCompileBLE)(nil),           // 20: jot.judge.v1.JudgeCompileBLE
+	(*JudgeSystemError)(nil),          // 21: jot.judge.v1.JudgeSystemError
+	nil,                               // 22: jot.judge.v1.JudgeRequest.SubproblemsEntry
+	nil,                               // 23: jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry
 }
 var file_judge_v1_judge_proto_depIdxs = []int32{
-	0,  // 0: jot.judge.v1.JudgeRequest.language:type_name -> jot.judge.v1.Language
-	3,  // 1: jot.judge.v1.JudgeEvent.received:type_name -> jot.judge.v1.JudgeReceived
-	4,  // 2: jot.judge.v1.JudgeEvent.compiling:type_name -> jot.judge.v1.JudgeCompiling
-	5,  // 3: jot.judge.v1.JudgeEvent.testcases_downloading:type_name -> jot.judge.v1.JudgeTestcasesDownloading
-	6,  // 4: jot.judge.v1.JudgeEvent.running:type_name -> jot.judge.v1.JudgeRunning
-	7,  // 5: jot.judge.v1.JudgeEvent.result:type_name -> jot.judge.v1.JudgeResult
-	8,  // 6: jot.judge.v1.JudgeResult.complete:type_name -> jot.judge.v1.JudgeComplete
-	15, // 7: jot.judge.v1.JudgeResult.compile_error:type_name -> jot.judge.v1.JudgeCompileError
-	16, // 8: jot.judge.v1.JudgeResult.compile_tle:type_name -> jot.judge.v1.JudgeCompileTLE
-	17, // 9: jot.judge.v1.JudgeResult.compile_ble:type_name -> jot.judge.v1.JudgeCompileBLE
-	18, // 10: jot.judge.v1.JudgeResult.system_error:type_name -> jot.judge.v1.JudgeSystemError
-	19, // 11: jot.judge.v1.JudgeComplete.subproblem_verdicts:type_name -> jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry
-	10, // 12: jot.judge.v1.SubproblemVerdict.correct:type_name -> jot.judge.v1.SubproblemCorrect
-	11, // 13: jot.judge.v1.SubproblemVerdict.wrong_answer:type_name -> jot.judge.v1.SubproblemWrongAnswer
-	12, // 14: jot.judge.v1.SubproblemVerdict.time_limit_exceeded:type_name -> jot.judge.v1.SubproblemTLE
-	13, // 15: jot.judge.v1.SubproblemVerdict.memory_limit_exceeded:type_name -> jot.judge.v1.SubproblemMLE
-	14, // 16: jot.judge.v1.SubproblemVerdict.runtime_error:type_name -> jot.judge.v1.SubproblemRuntimeError
-	9,  // 17: jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry.value:type_name -> jot.judge.v1.SubproblemVerdict
-	1,  // 18: jot.judge.v1.JudgeService.Judge:input_type -> jot.judge.v1.JudgeRequest
-	2,  // 19: jot.judge.v1.JudgeService.Judge:output_type -> jot.judge.v1.JudgeEvent
-	19, // [19:20] is the sub-list for method output_type
-	18, // [18:19] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	22, // 0: jot.judge.v1.JudgeRequest.subproblems:type_name -> jot.judge.v1.JudgeRequest.SubproblemsEntry
+	2,  // 1: jot.judge.v1.JudgeRequest.language:type_name -> jot.judge.v1.Language
+	0,  // 2: jot.judge.v1.Subproblem.testcase_origin:type_name -> jot.judge.v1.TestcaseOrigin
+	1,  // 3: jot.judge.v1.Subproblem.checker:type_name -> jot.judge.v1.Checker
+	6,  // 4: jot.judge.v1.JudgeEvent.received:type_name -> jot.judge.v1.JudgeReceived
+	7,  // 5: jot.judge.v1.JudgeEvent.compiling:type_name -> jot.judge.v1.JudgeCompiling
+	8,  // 6: jot.judge.v1.JudgeEvent.testcases_downloading:type_name -> jot.judge.v1.JudgeTestcasesDownloading
+	9,  // 7: jot.judge.v1.JudgeEvent.running:type_name -> jot.judge.v1.JudgeRunning
+	10, // 8: jot.judge.v1.JudgeEvent.result:type_name -> jot.judge.v1.JudgeResult
+	11, // 9: jot.judge.v1.JudgeResult.complete:type_name -> jot.judge.v1.JudgeComplete
+	18, // 10: jot.judge.v1.JudgeResult.compile_error:type_name -> jot.judge.v1.JudgeCompileError
+	19, // 11: jot.judge.v1.JudgeResult.compile_tle:type_name -> jot.judge.v1.JudgeCompileTLE
+	20, // 12: jot.judge.v1.JudgeResult.compile_ble:type_name -> jot.judge.v1.JudgeCompileBLE
+	21, // 13: jot.judge.v1.JudgeResult.system_error:type_name -> jot.judge.v1.JudgeSystemError
+	23, // 14: jot.judge.v1.JudgeComplete.subproblem_verdicts:type_name -> jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry
+	13, // 15: jot.judge.v1.SubproblemVerdict.correct:type_name -> jot.judge.v1.SubproblemCorrect
+	14, // 16: jot.judge.v1.SubproblemVerdict.wrong_answer:type_name -> jot.judge.v1.SubproblemWrongAnswer
+	15, // 17: jot.judge.v1.SubproblemVerdict.time_limit_exceeded:type_name -> jot.judge.v1.SubproblemTLE
+	16, // 18: jot.judge.v1.SubproblemVerdict.memory_limit_exceeded:type_name -> jot.judge.v1.SubproblemMLE
+	17, // 19: jot.judge.v1.SubproblemVerdict.runtime_error:type_name -> jot.judge.v1.SubproblemRuntimeError
+	4,  // 20: jot.judge.v1.JudgeRequest.SubproblemsEntry.value:type_name -> jot.judge.v1.Subproblem
+	12, // 21: jot.judge.v1.JudgeComplete.SubproblemVerdictsEntry.value:type_name -> jot.judge.v1.SubproblemVerdict
+	3,  // 22: jot.judge.v1.JudgeService.Judge:input_type -> jot.judge.v1.JudgeRequest
+	5,  // 23: jot.judge.v1.JudgeService.Judge:output_type -> jot.judge.v1.JudgeEvent
+	23, // [23:24] is the sub-list for method output_type
+	22, // [22:23] is the sub-list for method input_type
+	22, // [22:22] is the sub-list for extension type_name
+	22, // [22:22] is the sub-list for extension extendee
+	0,  // [0:22] is the sub-list for field type_name
 }
 
 func init() { file_judge_v1_judge_proto_init() }
@@ -1336,21 +1512,21 @@ func file_judge_v1_judge_proto_init() {
 	if File_judge_v1_judge_proto != nil {
 		return
 	}
-	file_judge_v1_judge_proto_msgTypes[1].OneofWrappers = []any{
+	file_judge_v1_judge_proto_msgTypes[2].OneofWrappers = []any{
 		(*JudgeEvent_Received)(nil),
 		(*JudgeEvent_Compiling)(nil),
 		(*JudgeEvent_TestcasesDownloading)(nil),
 		(*JudgeEvent_Running)(nil),
 		(*JudgeEvent_Result)(nil),
 	}
-	file_judge_v1_judge_proto_msgTypes[6].OneofWrappers = []any{
+	file_judge_v1_judge_proto_msgTypes[7].OneofWrappers = []any{
 		(*JudgeResult_Complete)(nil),
 		(*JudgeResult_CompileError)(nil),
 		(*JudgeResult_CompileTle)(nil),
 		(*JudgeResult_CompileBle)(nil),
 		(*JudgeResult_SystemError)(nil),
 	}
-	file_judge_v1_judge_proto_msgTypes[8].OneofWrappers = []any{
+	file_judge_v1_judge_proto_msgTypes[9].OneofWrappers = []any{
 		(*SubproblemVerdict_Correct)(nil),
 		(*SubproblemVerdict_WrongAnswer)(nil),
 		(*SubproblemVerdict_TimeLimitExceeded)(nil),
@@ -1362,8 +1538,8 @@ func file_judge_v1_judge_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_judge_v1_judge_proto_rawDesc), len(file_judge_v1_judge_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   19,
+			NumEnums:      3,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
